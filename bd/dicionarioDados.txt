@@ -1,0 +1,25 @@
+linhas_Onibus{
+	idLinha int not null, --PK
+	nomeIda varchar(50) not null,
+	nomeVolta varchar(50) not null,
+
+}
+
+pontos{
+	idPonto int not null, --PK
+	coordenada geography not null,
+}
+
+itinerário{
+	idLinha int not null, --FK(linhas_Onibus)
+	sentido varchar(50) not null,
+	idPonto int not null, --FK(pontos)
+	sequencia int not null
+}
+
+horários_Partida{
+	idLinha int not null, --FK(linhas_Onibus)
+	sentido varchar(50) not null,
+	horario time not null
+}
+
