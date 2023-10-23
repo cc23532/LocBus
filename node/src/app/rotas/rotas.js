@@ -5,4 +5,14 @@ module.exports = (app) =>
     next();
   });
 
-}
+  const usuariosController = require("../controllers/CON_Usuario");
+  const userController = new usuariosController();
+
+  app.get("/cadastro", (req,res) => {
+    console.log("Abrindo Formulário...");
+    res.render("formCadastro");
+  });
+
+  app.post("/inclusaoNovoCliente",userController.executaIncluirEJS());
+
+} 
