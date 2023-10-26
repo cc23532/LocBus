@@ -10,7 +10,7 @@ module.exports = (app) =>
 
   app.get("/cadastro", (req,res) => {
     console.log("Abrindo Formulário...");
-    res.render("formCadastro");
+    res.render("cadastro");
   });
 
   app.post("/inclusaoNovoCliente",userController.executaIncluirEJS());

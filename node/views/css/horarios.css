@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root{
+    --azul: #004aad;
+    --laranja: #ff914d;
+    --branco: #fff;
+    --preto: #000;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background-color: #fff;
+}
+
+/* banner */
+.container {
+    margin: 0 auto;
+    justify-content: center;
+    height: auto;
+    padding: 20px 10%;
+}
+
+.content .links a{
+    color: var(--preto);
+    font-size: .8em;
+}
+.content .links a#horario{
+    color: var(--laranja);
+}
+.banner-horario {
+    margin: 10px 0;
+    border-radius: 15px;
+    width: 105%;
+}
+
+/* tabela horarios */
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+}
+
+.table th {
+    background-color: var(--azul);
+    color: var(--branco);
+}
+
+
+.table button {
+    background-color: var(--laranja);
+    color: var(--branco);
+    border: none;
+    padding: 1px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.table button:hover {
+    background-color: rgba(255, 145, 77, 0.9);
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/login.css" />
+    <link rel="stylesheet" href="./css/header.css" />
+    <title>Login</title>
+  </head>
+  <body>
+    <!-- header -->
+    <header>
+      <img src="./imgs/lockbus-logo.png" alt="logo" class="logo" />
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#">Início</a></li>
+          <li><a href="horarios.html">Horários</a></li>
+          <li><a href="#">Linhas</a></li>
+          <li><a href="#">Quem Somos</a></li>
+          <li><a href="#">Fale Conosco</a></li>
+        </ul>
+      </nav>
+
+      <a href="" class="btn-login"><button>Fazer Login</button></a>
+    </header>
+
+    <div class="container">
+      <div class="content">
+        <div class="form-image">
+          <img src="" alt="" />
+        </div>
+        <div class="form">
+          <form method="post" action="/inclusaoNovoCliente" onsubmit="return validarForm()">
+            <div class="form-header">
+              <div class="title">
+                <h1>Fazer Login</h1>
+              </div>
+              <div class="login-button">
+                <button><a href="/login">Entrar</a></button>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div class="input-box">
+                <label for="firstname">Primeiro Nome:</label>
+                <input
+                  id="firstname"
+                  type="text"
+                  name="firstname"
+                  placeholder="Digite seu primeiro nome"
+                  required
+                >
+              </div>
+
+              <div class="input-box">
+                <label for="lastname">Primeiro Nome:</label>
+                <input
+                  id="lastname"
+                  type="text"
+                  name="lastname"
+                  placeholder="Digite seu sobrenome"
+                  required
+                >
+              </div>
+
+              <div class="input-box">
+                <label for="cpf">CPF:</label>
+                <input
+                  id="cpf"
+                  type="number"
+                  name="cpf"
+                  placeholder="CPF"
+                  required
+                  oninput="validarCPF(this.value)"
+                >
+              </div>
+
+              <div class="input-box">
+                <label for="email">Email:</label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Digite seu email"
+                  required
+                  oninput="validarEmail(this.value)"
+                >
+              </div>
+
+              <div class="input-box">
+                <label for="password">Senha:</label>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Digite sua senha"
+                  required
+                />
+              </div>
+
+              <div class="input-box">
+                <label for="password">Confirme sua senha:</label>
+                <input
+                  id="ConfirmPassword"
+                  type="password"
+                  name="ConfirmPassword"
+                  placeholder="Digite sua senha"
+                  required
+                  oninput="verificarCompatibilidadeSenhas(this.value)"
+                />
+              </div>
+
+              <div class="input-box">
+                <label for="fav-bus">Linha Preferida:</label>
+                <select name="fav-bus" id="fav-bus">
+                  <option value="675">675 - Campinas via Swift / Valinhos (Rodoviária)</option>
+                  <option value="676">676 - Campinas via Jd. do Lago / Valinhos (Jd. do Lago)</option>
+                  <option value="677">677 - Campinas (Rodoviária) / Valinhos (Pq. das Colinas)</option>
+                  <option value="null"></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="register-button">
+              <button><a href="#">Cadastrar</a></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Função para validar um CPF
+function validarCPF(cpf) {
+  cpf = cpf.replace(/[^\d]/g, ''); // Remove caracteres não numéricos
+
+  if (cpf.length !== 11) return false; // O CPF deve ter 11 dígitos
+
+  // Verifica se todos os dígitos são iguais (ex: 111.111.111-11)
+  if (/^(\d)\1{10}$/.test(cpf)) return false;
+
+  let sum = 0;
+  let remainder;
+
+  for (let i = 1; i <= 9; i++) {
+      sum += parseInt(cpf[i - 1]) * (11 - i);
+  }
+
+  remainder = (sum * 10) % 11;
+
+  if (remainder === 10 || remainder === 11) remainder = 0;
+
+  if (remainder !== parseInt(cpf[9])) return false;
+
+  sum = 0;
+
+  for (let i = 1; i <= 10; i++) {
+      sum += parseInt(cpf[i - 1]) * (12 - i);
+  }
+
+  remainder = (sum * 10) % 11;
+
+  if (remainder === 10 || remainder === 11) remainder = 0;
+
+  if (remainder !== parseInt(cpf[10])) return false;
+
+  return true;
+}
+
+// Função para validar um endereço de email
+function validarEmail(email) {
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return regex.test(email);
+}
+
+// Função para verificar a compatibilidade de senhas
+function verificarCompatibilidadeSenhas(senha, confirmaSenha) {
+  return senha === confirmaSenha;
+}
+  </script>
+  </body>
+</html>

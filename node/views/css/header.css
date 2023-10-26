@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --azul: #004aad;
+    --laranja: #ff914d;
+    --branco: #fff;
+    --preto: #000;
+}
+
+/* header */
+header li,
+a,
+button {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: .9em;
+    color: var(--branco);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10%;
+    background-color: var(--azul);
+}
+
+header img {
+    width: 15vw;
+}
+
+.logo {
+    cursor: pointer;
+}
+
+.nav-links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav-links li a {
+    transition: all .3s ease 0s;
+}
+
+.nav-links li a:hover {
+    color: var(--laranja);
+}
+
+.btn-login button {
+    padding: 9px 25px;
+    background-color: var(--laranja);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all .3s ease 0s;
+}
+
+.btn-login button:hover {
+    background-color: rgba(255, 145, 77, .9);
+}
