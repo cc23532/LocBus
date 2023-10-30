@@ -13,6 +13,11 @@ module.exports = (app) =>
     res.render("cadastro");
   });
 
+  app.get("/mapa", (req,res) => {
+    console.log("Abrindo mapa...");
+    res.render("mapa");
+  });
+
   app.post("/inclusaoNovoCliente",userController.executaIncluirEJS());
 
 } 

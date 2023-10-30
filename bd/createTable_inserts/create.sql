@@ -1,5 +1,5 @@
 create table locbus.Usuario(
-	idUser int not null, --pk
+	idUser int identity not null, --pk
 	nome varchar(20) not null,
 	sobrenome varchar(30) not NULL,
 	cpf varchar(11) not null unique,

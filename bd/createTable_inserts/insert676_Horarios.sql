@@ -11,7 +11,3 @@ values
 --não opera de sabado e domingo
     (676, 'Ida', 'Sábados', '00:00'),
     (676, 'Ida', 'Domingos e Feriados', '00:00')
-
-
-
-             
