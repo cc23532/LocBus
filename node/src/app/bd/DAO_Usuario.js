@@ -15,6 +15,20 @@ class DAO_Usuario{
           });
         });
       };
+
+
+      getPonto(idPonto, logradouro, lat, long){
+        return new Promise ((resolve, reject) => {
+          const sql = 'select * from locbus.Pontos where';
+          this._bd.query(sql, [nome, sobrenome, cpf, email, password], (erro, recordset) => {
+            if (erro) {
+              console.log(erro);
+              return reject("Inserção de Cliente falhou");
+            }
+            resolve(recordset);
+          });
+        })
+      }
 };
 
 module.exports= DAO_Usuario;
