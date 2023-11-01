@@ -5,7 +5,7 @@
     <style>
         #map {
             height: 400px;
-            width: 100%;
+            width: 50%;
         }
     </style>
 </head>
@@ -15,10 +15,9 @@
     <script>
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -22.97203001196739, lng: -46.99539974348299 },
-                zoom: 14
+                center: { lat: -22.929643096618637, lng: -47.03574887291138 },
+                zoom: 12
             });
-
             fetch('/get-pontos')
                 .then(function(response) {
                     return response.json();
@@ -26,6 +25,7 @@
                 .then(function(data) {
                     // Iterar sobre os dados e adicionar marcadores ao mapa
                     data.forEach(function(ponto) {
+=
                         var marker = new google.maps.Marker({
                             position: { lat: parseFloat(ponto.lat), lng: parseFloat(ponto.long) },
                             map: map,
