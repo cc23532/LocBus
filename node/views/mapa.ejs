@@ -19,21 +19,29 @@
                 zoom: 14
             });
 
-            // Use o Fetch API para buscar dados do PHP
-            fetch('getPontos.php')
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(point => {
+            fetch('/get-pontos')
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Iterar sobre os dados e adicionar marcadores ao mapa
+                    data.forEach(function(ponto) {
                         var marker = new google.maps.Marker({
-                            position: { lat: parseFloat(point.lat), lng: parseFloat(point.long) },
+                            position: { lat: parseFloat(ponto.lat), lng: parseFloat(ponto.long) },
                             map: map,
-                            title: point.logradouro
+                            title: ponto.logradouro,
                         });
+                        markers.push(marker);
                     });
                 })
-                .catch(error => console.error('Erro ao buscar dados: ', error));
+                .catch(function(error) {
+                    console.error('Erro na obtenção de dados do servidor:', error);
+                });
         }
+
+        google.maps.event.addDomListener(window, 'load', initMap);
     </script>
+
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGJHcT9GwLSLre5lNgyS0RmaqaA6R8IQ&callback=initMap" async defer></script>
 </body>
