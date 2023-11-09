@@ -6,7 +6,7 @@ const expressLayout= require("express-ejs-layouts");
 app.set("views", "./views");
 app.set("view engine", "ejs");
 app.use(expressLayout);
-
+app.use(express.static("views"))
 
 app.use(
     bodyParser.urlencoded({
