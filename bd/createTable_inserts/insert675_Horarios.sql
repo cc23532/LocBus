@@ -1,4 +1,4 @@
-insert into locbus.Horarios_Partida
+insert into lb_Horarios_Partida
     (idLinha, sentido, dia, horario)
 values
 

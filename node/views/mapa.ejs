@@ -18,31 +18,243 @@
                 center: { lat: -22.929643096618637, lng: -47.03574887291138 },
                 zoom: 12
             });
-            fetch('/get-pontos')
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(data) {
-                    // Iterar sobre os dados e adicionar marcadores ao mapa
-                    data.forEach(function(ponto) {
-=
-                        var marker = new google.maps.Marker({
-                            position: { lat: parseFloat(ponto.lat), lng: parseFloat(ponto.long) },
-                            map: map,
-                            title: ponto.logradouro,
-                        });
-                        markers.push(marker);
-                    });
-                })
-                .catch(function(error) {
-                    console.error('Erro na obtenção de dados do servidor:', error);
-                });
-        }
 
-        google.maps.event.addDomListener(window, 'load', initMap);
+            // Suponha que 'pontos' contenha os dados dos pontos obtidos do banco de dados
+            var infowindow = new google.maps.InfoWindow();
+
+            // Suponha que você tem vários pontos manualmente
+            var pontos = [
+                { id: 1, lat: -22.97203001196739, lng: -46.99539974348299, title: "Terminal Rodoviário De Valinhos" },
+                { id: 2, lat: -22.967500665038074, lng: -46.99533936439306, title: "Avenida Gessy Lever, 99" },
+                { id: 3, lat: -22.963183769464546, lng: -46.993687123583555, title: "Upa Unidade Valinhos" },
+                { id: 4, lat: -22.96841934578796, lng: -46.994851202058676, title: "Rua Quinze De Novembro, 256-328" },
+                { id: 5, lat: -22.9680494737643, lng: -47.00171412206294, title: "Avenida Dom Nery, 388" },
+                { id: 6, lat: -22.966524845805356, lng: -47.00425724903885, title: "Avenida Dom Nery, 718" },
+                { id: 7, lat: -22.965375989198805, lng: -47.005916548741794, title: "Sp-091, 872-992" },
+                { id: 8, lat: -47.0103213263816, lng: -22.962387469361293, title: "Parada Sim (01)" },
+                { id: 9, lat: -22.95941205855686, lng: -47.01466746489004, title: "Rodovia Francisco Von Zuben Sp-091, 1344-1396" },
+                { id: 10, lat: -22.95782182519404, lng: -47.0191324503005, title: "Rua Manoel Dos Santos Marta, 39-43" },
+                { id: 11, lat: -22.94965971647859, lng: -47.025337779716395, title: "Avenida Engenheiro Antônio Francisco De Paula Souza, 7108-7286" },
+                { id: 12, lat: -22.94598698357896, lng: -47.02922081166738, title: "Rodovia Francisco Von Zuben (Ponto 1)" },
+                { id: 13, lat: -22.942745294628658, lng: -47.03229419130476, title: "Rodovia Francisco Von Zuben (Ponto 2)" },
+                { id: 14, lat: -22.938660712199376, lng: -47.03458930918804, title: "Av. Eng. Antônio Francisco De Paula Souza - Rua Maria Bicego Santana" },
+                { id: 15, lat: -22.935670708413557, lng: -47.03685143957028, title: "Av. Eng. Antônio Francisco De Paula Souza - Rua Waldemar César Da Silveira" },
+                { id: 16, lat: -22.930062328958154, lng: -47.038319083265286, title: "Rua Da Abolição, 2381-2599" },
+                { id: 17, lat: -22.930062328958154, lng: -47.038319083265286, title: "Rua Da Abolição, 2201-2357" },
+                { id: 18, lat: -22.927191487393657, lng: 47.04186995813277, title: "Extra Abolição" },
+                { id: 19, lat: -22.92498039806481, lng: -47.04460678961979, title: "Rua Da Abolição - 2623-2711" },
+                { id: 20, lat: -22.922918592605917, lng: -47.04731806923949, title: "Rua Da Abolição, 512" },
+                { id: 21, lat: -22.921795236102493, lng: -47.048702079972905, title: "Rua Da Abolição, 1079" },
+                { id: 22, lat: -22.920411262450386, lng: -47.050506379617765, title: "Rua Da Abolição, 859" },
+                { id: 23, lat: -22.917782276373124, lng: -47.05363879875848, title: "Rua Da Abolição, 421-445" },
+                { id: 24, lat: -22.91593328035724, lng: -47.054512472613396, title: "Rua Da Abolição, 199" },
+                { id: 25, lat: -22.913806882543366, lng: -47.0563640684583, title: "Rua Proença, 1184-1230" },
+                { id: 26, lat: -22.911765942181393, lng: -47.057737541272154, title: "Av. Aquidaban (Pista Lateral), 187" },
+                { id: 27, lat: -22.91121726116298, lng: -47.05802346549096, title: "Av. Aquidaban - Rua José Paulino" },
+                { id: 28, lat: -22.908215406065644, lng: -47.05972183784189, title: "Rua José Paulino - Av. Dr. Moraes Sales" },
+                { id: 29, lat: -22.905354948982254, lng: -47.06115763682644, title: "Rua José Paulino - Av. Campos Sales" },
+                { id: 30, lat: -22.90689707271998, lng: -47.058768194987174, title: "Correios (Ponto 1)" },
+                { id: 31, lat: -22.909295881716154, lng: -47.05748437979816, title: "Parada 00480" },
+                { id: 32, lat: -22.91195550220122, lng: -47.056147298616864, title: "Parada 90012" },
+                { id: 33, lat: -22.917079440638666, lng: -47.05532046135011, title: "Av. Da Saudade, 330-396" },
+                { id: 34, lat: -22.9188110994137, lng: -47.054195487791475, title: "Av. Da Saudade, 664" },
+                { id: 35, lat: -22.92159659484324, lng: -47.0515380333105, title: "Câmara Municipal De Campinas" },
+                { id: 36, lat: -22.923321473748366, lng: -47.04922022122438, title: "Cemitério Da Saudade" },
+                { id: 37, lat: -22.923458521313428, lng: -47.04688589391473, title: "Rua Da Abolição, 1283" },
+                { id: 38, lat: -22.925396865588134, lng: -47.04451300002912, title: "Rua Da Abolição - 2713-2795" },
+                { id: 39, lat: -22.92731562348409, lng: -47.042115155374354, title: "Extra Abolição (Ponto 2)" },
+                { id: 40, lat: -22.93014670021568, lng: 47.03838696768361, title: "Rua Da Abolição, 2512" },
+                { id: 41, lat: -22.932155648004187, lng: 47.037712955686146, title: "Rua Frederico Ozanan, 128" },
+                { id: 42, lat: -22.93575462487408, lng: 47.03698148324864, title: "Av. Eng. Antônio Francisco De Paula Souza, 4406-4556" },
+                { id: 43, lat: , lng: , title: "" },
+                { id: 44, lat: , lng: , title: "" },
+                { id: 45, lat: , lng: , title: "" },
+                { id: 46, lat: , lng: , title: "" },
+                { id: 47, lat: , lng: , title: "" },
+                { id: 48, lat: , lng: , title: "" },
+                { id: 49, lat: , lng: , title: "" },
+                { id: 50, lat: , lng: , title: "" },
+                { id: 51, lat: , lng: , title: "" },
+                { id: 52, lat: , lng: , title: "" },
+                { id: 53, lat: , lng: , title: "" },
+                { id: 54, lat: , lng: , title: "" },
+                { id: 55, lat: , lng: , title: "" },
+                { id: 56, lat: , lng: , title: "" },
+                { id: 57, lat: , lng: , title: "" },
+                { id: 58, lat: , lng: , title: "" },
+                { id: 59, lat: , lng: , title: "" },
+                { id: 60, lat: , lng: , title: "" },
+                { id: 61, lat: , lng: , title: "" },
+                { id: 62, lat: , lng: , title: "" },
+                { id: 63, lat: , lng: , title: "" },
+                { id: 64, lat: , lng: , title: "" },
+                { id: 65, lat: , lng: , title: "" },
+                { id: 66, lat: , lng: , title: "" },
+                { id: 67, lat: , lng: , title: "" },
+                { id: 68, lat: , lng: , title: "" },
+                { id: 69, lat: , lng: , title: "" },
+                { id: 70, lat: , lng: , title: "" },
+                { id: 71, lat: , lng: , title: "" },
+                { id: 72, lat: , lng: , title: "" },
+                { id: 73, lat: , lng: , title: "" },
+                { id: 74, lat: , lng: , title: "" },
+                { id: 75, lat: , lng: , title: "" },
+                { id: 76, lat: , lng: , title: "" },
+                { id: 77, lat: , lng: , title: "" },
+                { id: 78, lat: , lng: , title: "" },
+                { id: 79, lat: , lng: , title: "" },
+                { id: 80, lat: , lng: , title: "" },
+                { id: 81, lat: , lng: , title: "" },
+                { id: 82, lat: , lng: , title: "" },
+                { id: 83, lat: , lng: , title: "" },
+                { id: 84, lat: , lng: , title: "" },
+                { id: 85, lat: , lng: , title: "" },
+                { id: 86, lat: , lng: , title: "" },
+                { id: 87, lat: , lng: , title: "" },
+                { id: 88, lat: , lng: , title: "" },
+                { id: 89, lat: , lng: , title: "" },
+                { id: 90, lat: , lng: , title: "" },
+                { id: 91, lat: , lng: , title: "" },
+                { id: 92, lat: , lng: , title: "" },
+                { id: 93, lat: , lng: , title: "" },
+                { id: 94, lat: , lng: , title: "" },
+                { id: 95, lat: , lng: , title: "" },
+                { id: 96, lat: , lng: , title: "" },
+                { id: 97, lat: , lng: , title: "" },
+                { id: 98, lat: , lng: , title: "" },
+                { id: 99, lat: , lng: , title: "" },
+                { id: 100, lat: , lng: , title: "" },
+                { id: 101, lat: , lng: , title: "" },
+                { id: 102, lat: , lng: , title: "" },
+                { id: 103, lat: , lng: , title: "" },
+                { id: 104, lat: , lng: , title: "" },
+                { id: 105, lat: , lng: , title: "" },
+                { id: 106, lat: , lng: , title: "" },
+                { id: 107, lat: , lng: , title: "" },
+                { id: 108, lat: , lng: , title: "" },
+                { id: 109, lat: , lng: , title: "" },
+                { id: 110, lat: , lng: , title: "" },
+                { id: 111, lat: , lng: , title: "" },
+                { id: 112, lat: , lng: , title: "" },
+                { id: 113, lat: , lng: , title: "" },
+                { id: 114, lat: , lng: , title: "" },
+                { id: 115, lat: , lng: , title: "" },
+                { id: 116, lat: , lng: , title: "" },
+                { id: 117, lat: , lng: , title: "" },
+                { id: 118, lat: , lng: , title: "" },
+                { id: 119, lat: , lng: , title: "" },
+                { id: 120, lat: , lng: , title: "" },
+                { id: 121, lat: , lng: , title: "" },
+                { id: 122, lat: , lng: , title: "" },
+                { id: 123, lat: , lng: , title: "" },
+                { id: 124, lat: , lng: , title: "" },
+                { id: 125, lat: , lng: , title: "" },
+                { id: 126, lat: , lng: , title: "" },
+                { id: 127, lat: , lng: , title: "" },
+                { id: 128, lat: , lng: , title: "" },
+                { id: 129, lat: , lng: , title: "" },
+                { id: 130, lat: , lng: , title: "" },
+                { id: 131, lat: , lng: , title: "" },
+                { id: 132, lat: , lng: , title: "" },
+                { id: 133, lat: , lng: , title: "" },
+                { id: 134, lat: , lng: , title: "" },
+                { id: 135, lat: , lng: , title: "" },
+                { id: 136, lat: , lng: , title: "" },
+                { id: 137, lat: , lng: , title: "" },
+                { id: 138, lat: , lng: , title: "" },
+                { id: 139, lat: , lng: , title: "" },
+                { id: 140, lat: , lng: , title: "" },
+                { id: 141, lat: , lng: , title: "" },
+                { id: 142, lat: , lng: , title: "" },
+                { id: 143, lat: , lng: , title: "" },
+                { id: 144, lat: , lng: , title: "" },
+                { id: 145, lat: , lng: , title: "" },
+                { id: 146, lat: , lng: , title: "" },
+                { id: 147, lat: , lng: , title: "" },
+                { id: 148, lat: , lng: , title: "" },
+                { id: 149, lat: , lng: , title: "" },
+                { id: 150, lat: , lng: , title: "" },
+                { id: 151, lat: , lng: , title: "" },
+                { id: 152, lat: , lng: , title: "" },
+                { id: 153, lat: , lng: , title: "" },
+                { id: 154, lat: , lng: , title: "" },
+                { id: 155, lat: , lng: , title: "" },
+                { id: 156, lat: , lng: , title: "" },
+                { id: 157, lat: , lng: , title: "" },
+                { id: 158, lat: , lng: , title: "" },
+                { id: 159, lat: , lng: , title: "" },
+                { id: 160, lat: , lng: , title: "" },
+                { id: 161, lat: , lng: , title: "" },
+                { id: 162, lat: , lng: , title: "" },
+                { id: 163, lat: , lng: , title: "" },
+                { id: 164, lat: , lng: , title: "" },
+                { id: 165, lat: , lng: , title: "" },
+                { id: 166, lat: , lng: , title: "" },
+                { id: 167, lat: , lng: , title: "" },
+                { id: 168, lat: , lng: , title: "" },
+                { id: 169, lat: , lng: , title: "" },
+                { id: 170, lat: , lng: , title: "" },
+                { id: 171, lat: , lng: , title: "" },
+                { id: 172, lat: , lng: , title: "" },
+                { id: 173, lat: , lng: , title: "" },
+                { id: 174, lat: , lng: , title: "" },
+                { id: 175, lat: , lng: , title: "" },
+                { id: 176, lat: , lng: , title: "" },
+                { id: 177, lat: , lng: , title: "" },
+                { id: 178, lat: , lng: , title: "" },
+                { id: 179, lat: , lng: , title: "" },
+                { id: 180, lat: , lng: , title: "" },
+                { id: 181, lat: , lng: , title: "" },
+                { id: 182, lat: , lng: , title: "" },
+                { id: 183, lat: , lng: , title: "" },
+                { id: 184, lat: , lng: , title: "" },
+                { id: 185, lat: , lng: , title: "" },
+                { id: 186, lat: , lng: , title: "" },
+                { id: 187, lat: , lng: , title: "" },
+                { id: 188, lat: , lng: , title: "" },
+                { id: 189, lat: , lng: , title: "" },
+                { id: 190, lat: , lng: , title: "" },
+                { id: 191, lat: , lng: , title: "" },
+                { id: 192, lat: , lng: , title: "" },
+                { id: 193, lat: , lng: , title: "" },
+                { id: 194, lat: , lng: , title: "" },
+                { id: 195, lat: , lng: , title: "" },
+                { id: 196, lat: , lng: , title: "" },
+                { id: 197, lat: , lng: , title: "" },
+                { id: 198, lat: , lng: , title: "" },
+                { id: 199, lat: , lng: , title: "" }
+
+            ]
+
+            pontos.forEach(function (ponto) {
+            var marker = new google.maps.Marker({
+                position: { lat: ponto.lat, lng: ponto.lng },
+                map: map,
+                title: ponto.title,
+                icon: {
+                    url: '../assets/imgs/icon-bus-stop.png', // URL relativa ao ícone personalizado
+                    scaledSize: new google.maps.Size(30, 30) // Tamanho do ícone
+                }
+            });
+
+            // Configure um ouvinte de evento para exibir o título do marcador quando o marcador é clicado
+            marker.addListener('click', function() {
+                infowindow.setContent(marker.title);
+                infowindow.open(map, marker);
+            });
+        });
+            var marker = new google.maps.Marker({
+                position: { lat: -22.97203001196739, lng: -46.99539974348299 },
+                map: map,
+                title: "Terminal Rodoviário De Valinhos",
+                icon: {
+                    url: '../assets/imgs/icon-bus-stop.png', // URL relativa ao ícone personalizado
+                    scaledSize: new google.maps.Size(30, 30) // Tamanho do ícone
+                }
+            });        
+        }
     </script>
 
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGJHcT9GwLSLre5lNgyS0RmaqaA6R8IQ&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGJHcT9GwLSLre5lNgyS0RmaqaA6R8IQ&callback=initMap" async defer></script>
 </body>
 </html>

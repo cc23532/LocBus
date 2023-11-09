@@ -1,16 +1,8 @@
--- Criar um trigger para validar o CPF antes da inserção na tabela locbus.Usuario
 CREATE TRIGGER ValidarCPFUsuario
-ON locbus.Usuario
-AFTER INSERT
-AS
+AFTER INSERT ON lb_Usuario
+FOR EACH ROW
 BEGIN
-    DECLARE @InsertedCPF VARCHAR(11);
-    SELECT @InsertedCPF = i.cpf
-    FROM inserted i;
-
-    IF LEN(@InsertedCPF) != 11 OR @InsertedCPF NOT LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]' 
-    BEGIN
-        RAISERROR('CPF inválido: deve conter 11 dígitos numéricos.', 16, 1);
-        ROLLBACK TRANSACTION;
-    END;
-END;
+    IF LENGTH(NEW.cpf) != 11 OR NEW.cpf NOT REGEXP '^[0-9]{11}$' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'CPF inválido: deve conter 11 dígitos numéricos.';
+    END IF;
+END

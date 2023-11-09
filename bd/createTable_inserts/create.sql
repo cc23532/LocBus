@@ -1,53 +1,54 @@
-create table locbus.Usuario(
-	idUser int identity not null, --pk
-	nome varchar(20) not null,
-	sobrenome varchar(30) not NULL,
-	cpf varchar(11) not null unique,
-	email varchar(60) not null unique,
-	senha varchar(30) not null,
-	linhaPreferida int null,
-	primary key (idUser),
-	foreign key (linhaPreferida) REFERENCES locbus.Linhas(idLinha)
-)
 
-create table locbus.Linhas(
-	idLinha int not null, --PK
-	nomeIda varchar(50) not null,
-	nomeVolta varchar(50) not null,
-	primary key (idLinha)
-)
+CREATE TABLE lb_Linhas(
+	idLinha INT NOT NULL,
+	nomeIda VARCHAR(50) NOT NULL,
+	nomeVolta VARCHAR(50) NOT NULL,
+	PRIMARY KEY (idLinha)
+);
 
-create table locbus.Pontos(
-	idPonto int not null, --PK
-	logradouro varchar(100) not null,
-	lat varchar(50) not null,
-	long varchar(50) not null,
-	primary key (idPonto)
-)
 
-create table locbus.Itinerario(
-	idLinha int not null, --FK(linhas)
-	sentido varchar(5) not null,
-	idPonto int not null, --FK(pontos)
-	logradouro varchar(100) not null,
-	sequencia int not null,
-	foreign key (idLinha)
-		references locbus.Linhas(idLinha),
-	foreign key (idPonto)
-		references locbus.Pontos(idPonto)
-)
+CREATE TABLE lb_Usuario(
+	idUser INT AUTO_INCREMENT,
+	nome VARCHAR(20) NOT NULL,
+	sobrenome VARCHAR(30) NOT NULL,
+	cpf VARCHAR(11) NOT NULL,
+	email VARCHAR(60) NOT NULL,
+	senha VARCHAR(30) NOT NULL,
+	linhaPreferida INT NULL,
+	PRIMARY KEY (idUser),
+	FOREIGN KEY (linhaPreferida) REFERENCES lb_Linhas(idLinha),
+	UNIQUE (cpf),
+	UNIQUE (email)
+);
 
-create table locbus.Horarios_Partida(
-	idLinha int not null, --FK(linhas)
-	sentido varchar(5) not null,
-	dia varchar(50) not null,
-	horario time not null,
-	foreign key (idLinha)
-		references locbus.Linhas(idLinha)
-)
+CREATE TABLE lb_Pontos(
+	idPonto INT NOT NULL,
+	logradouro VARCHAR(100) NOT NULL,
+	lat VARCHAR(50) NOT NULL,
+	lon VARCHAR(50) NOT NULL,
+	PRIMARY KEY (idPonto)
+);
 
-select * from locbus.linhas
-select * from locbus.pontos
-select * from locbus.Itinerario
-SELECT * from locbus.Horarios_Partida
-select * from locbus.Usuario
+CREATE TABLE lb_Itinerario(
+	idLinha INT NOT NULL,
+	sentido VARCHAR(5) NOT NULL,
+	idPonto INT NOT NULL,
+	logradouro VARCHAR(100) NOT NULL,
+	sequencia INT NOT NULL,
+	FOREIGN KEY (idLinha) REFERENCES lb_Linhas(idLinha),
+	FOREIGN KEY (idPonto) REFERENCES lb_Pontos(idPonto)
+);
+
+CREATE TABLE lb_Horarios_Partida(
+	idLinha INT NOT NULL, 
+	sentido VARCHAR(5) NOT NULL,
+	dia VARCHAR(50) NOT NULL,
+	horario TIME NOT NULL,
+	FOREIGN KEY (idLinha) REFERENCES lb_Linhas(idLinha)
+);
+
+select * from lb_linhas
+select * from lb_pontos
+select * from lb_Itinerario
+SELECT * from lb_Horarios_Partida
+select * from lb_Usuario

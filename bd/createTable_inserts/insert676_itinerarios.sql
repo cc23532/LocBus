@@ -1,4 +1,4 @@
-insert into locbus.itinerario
+insert into lb_itinerario
     (idLinha, sentido, idPonto, logradouro, sequencia)
 values
     (676, 'Ida', 55, 'Rua Antenor Roncatti, 106-310', 1),

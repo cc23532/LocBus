@@ -1,7 +1,6 @@
-insert into locbus.itinerario
+insert into lb_itinerario
     (idLinha, sentido, idPonto, logradouro, sequencia)
 values
-
     (677, 'Ida', 97, 'Avenida Presidente Tancredo Neves, 618', 1),
     (677, 'Ida', 98, 'Rua Augusto Tassi, 134', 2),
     (677, 'Ida', 99, 'Rua Vanderlei Bernardes, 3', 3),
@@ -133,4 +132,3 @@ values
     (677, 'Volta', 199, 'Rua Renato Prado, 496', 58),
     (677, 'Volta', 97, 'Avenida Presidente Tancredo Neves, 618', 59)
 
-    SELECT * FROM LOCBUS.Horarios_Partida

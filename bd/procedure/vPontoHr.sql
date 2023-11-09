@@ -1,16 +1,12 @@
-CREATE PROCEDURE create_vPontoHr
-AS
+CREATE PROCEDURE lb_create_vPontoHr()
 BEGIN
-    DECLARE @point INT;
-    SET @point = 1;
+    DECLARE v_point INT;
+    SET v_point = 1;
 
-    WHILE @point <= 199
-    BEGIN
-        DECLARE @view_name NVARCHAR(50) = 'v_Ponto' + CAST(@point AS NVARCHAR);
-        DECLARE @query NVARCHAR(MAX);
-
-        SET @query = N'
-        CREATE VIEW locbus.' + @view_name + N' AS
+    WHILE v_point <= 199 DO
+        SET @view_name = CONCAT('v_Ponto', v_point);
+        SET @query = CONCAT('
+        CREATE VIEW lb_', @view_name, ' AS
         SELECT
             l.idLinha,
             CASE
@@ -20,27 +16,28 @@ BEGIN
             END AS sentidoLinha,
             h.horario AS horarioTabela
         FROM
-            locbus.Linhas l
+            lb_Linhas l
         INNER JOIN
-            locbus.Itinerario i ON l.idLinha = i.idLinha
+            lb_Itinerario i ON l.idLinha = i.idLinha
         INNER JOIN
-            locbus.Horarios_Partida h ON l.idLinha = h.idLinha AND i.sentido = h.sentido
+            lb_Horarios_Partida h ON l.idLinha = h.idLinha AND i.sentido = h.sentido
         WHERE
-            i.idPonto = ' + CAST(@point AS NVARCHAR) + N'
+            i.idPonto = ', v_point, '
             AND h.dia = ''Dia Útil''
-            AND h.horario = (SELECT TOP 1 h2.horario
-                            FROM locbus.Horarios_Partida h2
+            AND h.horario = (SELECT h2.horario
+                            FROM lb_Horarios_Partida h2
                             WHERE h2.idLinha = h.idLinha
                                 AND h2.sentido = h.sentido
                                 AND h2.dia = ''Dia Útil''
-                                AND h2.horario > CONVERT(TIME, GETDATE())
-                            ORDER BY h2.horario)
-        ';
+                                AND h2.horario > CURTIME()
+                            ORDER BY h2.horario LIMIT 1)
+        ');
 
-        PRINT @query;
+        SET @stmt = @query;
+        PREPARE stmt FROM @stmt;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
 
-        EXEC sp_executesql @query;
-
-        SET @point = @point + 1;
-    END
-END;
+        SET v_point = v_point + 1;
+    END WHILE;
+END

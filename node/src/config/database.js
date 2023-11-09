@@ -1,23 +1,19 @@
-const mssql= require("mssql");
+const mySQL= require("mysql2");
 
-const config= {
-    server: 'regulus.cotuca.unicamp.br',
+const connection= mySQL.createConnection({
+    host: 'regulus.cotuca.unicamp.br',
     user: 'BD23532',
     password: 'BD23532',
-    database: 'BD23532',
-    options: {
-        encrypt: true,
-        trustServerCertificate: true
+    database: 'BD23532'
+});
+
+connection.connect(function(erro) {
+    if(erro){
+        console.log("ERRO na conexão com o BD23532");
     }
-};
+    else{
+        console.log("Conexão com o BD23532 BEM-SUCEDIDA");
+    }
+});
 
-mssql.connect(config)
-    .then(pool => {
-        console.log("Conexão com o banco de dados bem-sucedida");
-    })
-    .catch(err => {
-        console.error("Erro ao conectar ao banco de dados: " + err.message);
-    });
-
-module.exports= mssql;
-
+module.exports= connection;

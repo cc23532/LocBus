@@ -1,4 +1,4 @@
-insert into locbus.Itinerario
+insert into lb_Itinerario
     (idLinha, sentido, idPonto, logradouro, sequencia)
 values
     (675, 'Ida', 1, 'Terminal Rodoviário De Valinhos', 1),

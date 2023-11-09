@@ -1,5 +1,5 @@
-insert into locbus.Pontos
-    (idPonto, logradouro, lat, long)
+insert into lb_Pontos
+    (idPonto, logradouro, lat, lon)
 VALUES
 
 --675

@@ -1,23 +1,23 @@
 using System;
-using System.Data;
-using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.Data;
+using MySql.Data.MySqlClient;
 
 public List<Ponto> GetPontosDoBancoDeDados()
 {
-    string connectionString = "Server=regulus.cotuca.unicamp.br;Database=BD23532;User Id=BD23532;Password=BD23532;";
+    string connectionString = "Server=regulus.cotuca.unicamp.br;Database=BD23532;Uid=BD23532;Pwd=BD23532;";
 
     List<Ponto> pontos = new List<Ponto>();
 
-    using (SqlConnection connection = new SqlConnection(connectionString))
+    using (MySqlConnection connection = new MySqlConnection(connectionString))
     {
         connection.Open();
 
-        string sql = "SELECT idPonto, logradouro, lat, long FROM locbus.Pontos";
+        string sql = "SELECT idPonto, logradouro, lat, lon FROM lb_Pontos";
 
-        using (SqlCommand command = new SqlCommand(sql, connection))
+        using (MySqlCommand command = new MySqlCommand(sql, connection))
         {
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (MySqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {

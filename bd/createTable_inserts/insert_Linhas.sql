@@ -1,4 +1,4 @@
-insert into locbus.Linhas
+insert into lb_Linhas
     (idLinha, nomeIda, nomeVolta)
 values
     (675, 'Campinas via Swift', 'Valinhos (Rodoviária)'),
