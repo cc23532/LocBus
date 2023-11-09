@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root{
+    --azul: #004aad;
+    --laranja: #ff914d;
+    --branco: #fff;
+    --preto: #000;
+    --cinza : #737B97
+    --cinza-claro: #d5d1defe;
+    --branco-cinza: #F5F5F5;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Poppins', sans-serif;
+    transition: .2 linear;
+}
+
+html{
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* ------- LINHA COLORIDA ------- */
+.colorized-line{
+    background: linear-gradient(to right, #fcd000, #ff5f5f, #9100ff, #0086ff);
+    height: 6px;
+    width: 100%;
+}
+
+/* ------- SUMMARY ------- */
+.summary{
+    width: 88vw;
+    margin: 0 auto;
+    padding-top: 2%;
+}
+
+.summary a, span{
+    color: #000;
+}
+
+.summary a:last-child{
+    color: var(--laranja);
+}
+
+/* ------- BANNER ------- */
+section.banner{
+    width: 90;
+    height: auto;
+}
+
+section.banner .banner-img{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    padding: 2% 5% 5% 5%;
+}
+
+section.banner .banner-img img{
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* ------- TABLE ------- */
+.container{
+    width: 100vw;
+    height: auto;
+    padding-bottom: 5%;
+}
+
+main.table {
+    margin: 0 auto;
+    text-align: center;
+    width: 90vw;
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
+    overflow: hidden;
+}
+
+table{
+    width: 100%;
+}
+
+table, th, td{
+    border-collapse: collapse;
+    padding: 1em;
+}
+
+.table-header{
+    width: 100%;
+    height: 10%;
+    padding: .8rem 1rem;
+    background-color: var(--laranja);
+}
+
+.table-header h1{
+    color: #fff;
+}
+
+.table-body{
+    width: 95%;
+    background-color: var(--branco-cinza);
+    margin: 1rem auto;
+    border-radius: .6rem;
+    box-shadow: 0 .4rem .10rem #0001;
+}
+
+thead th{
+    background-color: #0000000b;
+}
+
+thead th:first-child{
+    border-radius: .6rem 0 0 0;
+}
+
+thead th:last-child {
+    border-radius: 0 .6rem 0 0;
+}
+
+tbody tr:nth-child(even){
+    background-color: #0000000b;
+}
+
+tbody tr:hover{
+    background: #fff9;
+}
+
+i.fa-regular.fa-clock {
+    color: var(--branco);
+    background-color: var(--azul);
+    padding: .3rem;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+i.fa-regular.fa-clock:hover {
+    background-color: rgba(0, 74, 173, .8);
+}
+
+/* ------- ESTRELA ------- */
+.star-icons {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.star-icons i.fa-solid.fa-star {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.star-icons:hover i.fa-regular.fa-star {
+    display: none;
+}
+
+.star-icons:hover i.fa-solid.fa-star {
+    display: inline;
+}
+
