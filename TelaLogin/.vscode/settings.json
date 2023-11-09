@@ -1,0 +1,16 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\BibliotecaJava\\javafx-sdk-21.0.1\\lib\\javafx.base.jar",
+        "c:\\BibliotecaJava\\javafx-sdk-21.0.1\\lib\\javafx.controls.jar",
+        "c:\\BibliotecaJava\\javafx-sdk-21.0.1\\lib\\javafx.fxml.jar",
+        "c:\\BibliotecaJava\\javafx-sdk-21.0.1\\lib\\javafx.graphics.jar",
+        "c:\\BibliotecaJava\\javafx-sdk-21.0.1\\lib\\javafx.media.jar",
+        "c:\\BibliotecaJava\\javafx-sdk-21.0.1\\lib\\javafx.swing.jar",
+        "c:\\BibliotecaJava\\javafx-sdk-21.0.1\\lib\\javafx.web.jar",
+        "c:\\BibliotecaJava\\javafx-sdk-21.0.1\\lib\\javafx-swt.jar"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
+}
