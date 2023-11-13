@@ -35,18 +35,35 @@ class CON_Usuario
     }
   }
 
-  getPontosEJS(){
+  getPontosEJS() {
     return async function(req, res){
-      const lbDAO= new locbusDAO(bd)
+      const lbDAO = new locbusDAO(bd);
       const pontoIDs = Array.from({ length: 199 }, (_, index) => index + 1);
-      lbDAO.getPontosPeloID(pontoIDs)
+
       try {
-        const pontosDesejados = await lbDAO.getPontosPeloID(pontoIDs);
-        res.render('mapa', { pontos: pontosDesejados }); // Renderize a página EJS com os dados
-    } catch (error) {
+          const pontosDesejados = await lbDAO.getPontosPeloID(pontoIDs);
+          res.render('mapa', { pontos: pontosDesejados });
+          console.log(pontosDesejados) // Renderize a página EJS com os dados
+      } catch (error) {
+          console.error('Erro na obtenção de dados do servidor:', error);
+          res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
+      }
+    }
+  }
+
+  exibeView(){
+    return function (req, res){
+      const lbDAO= new locbusDAO(bd)
+      const idPonto= req.query.idPonto
+      lbDAO.selectView(idPonto)
+      .then((horarios) =>{
+        console.log("Abrindo página de horários do ponto " + idPonto+ "...")
+        res.render('./HTML_CSS/horarios', {idPonto: idPonto, horarios: horarios})
+      })
+      .catch((error) => {
         console.error('Erro na obtenção de dados do servidor:', error);
         res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
-    }
+    });
     }
   }
 }

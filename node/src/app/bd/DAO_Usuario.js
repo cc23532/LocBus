@@ -30,9 +30,9 @@ class DAO_Usuario{
       };
 
 
-      async getPontosPeloID(ids) {
+       getPontosPeloID(ids) {
         return new Promise((resolve, reject) => {
-            const sql = `SELECT idPonto, logradouro, lat, lon FROM lb_Pontos WHERE idPonto IN (?)`;
+            const sql = `SELECT idPonto, logradouro, lat, lon FROM lb_Pontos order by idPonto`;
 
             this._bd.query(sql, [ids], (erro, recordset) => {
                 if (erro) {
@@ -43,6 +43,21 @@ class DAO_Usuario{
             });
         });
     }
+
+    selectView(idPonto) {
+      return new Promise((resolve, reject) => {
+          const viewName = `lb_v_ponto${idPonto}`;
+          const sql = `SELECT idLinha, sentidoLinha, horarioTabela FROM ${viewName}`;
+
+          this._bd.query(sql, [idPonto], (erro, recordset) => {
+              if (erro) {
+                  console.log(erro);
+                  return reject("Select falhou");
+              }
+              resolve(recordset);
+          });
+      });
+  }
 };
 
 module.exports= DAO_Usuario;

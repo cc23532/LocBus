@@ -65,14 +65,14 @@
     <section class="container">
       <main class="table">
         <section class="table-header">
-          <h1>Horários de ônibus</h1>
+          <h1>Horários para o Ponto <%= idPonto %></h1>
         </section>
         <section class="table-body">
           <table>
             <thead>
               <tr>
                 <th></th>
-                <th>Ônibus</th>
+                <th>Linhas</th>
                 <th>Destino</th>
                 <th>Horário</th>
                 <th>Todos Horários</th>
@@ -80,20 +80,7 @@
             </thead>
 
             <tbody>
-              <tr>
-                <td>
-                  <i class="star-icons">
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                  </i>
-                </td>
-                <td>316</td>
-                <td>Parque Cidade</td>
-                <td>8:00</td>
-                <td>
-                  <a href="#"><i class="fa-regular fa-clock"></i></a>
-                </td>
-              </tr>
+              <% for (let horario of horarios) { %>
 
               <tr>
                 <td>
@@ -102,28 +89,15 @@
                     <i class="fa-solid fa-star"></i>
                   </i>
                 </td>
-                <td>351</td>
-                <td>PUCC I</td>
-                <td>10:30</td>
+                <td><%= horario.idLinha %></td>
+                <td><%= horario.sentidoLinha %></td>
+                <td><%= horario.horarioTabela %></td>
                 <td>
                   <a href="#"><i class="fa-regular fa-clock"></i></a>
                 </td>
               </tr>
 
-              <tr>
-                <td>
-                  <i class="star-icons">
-                    <i class="fa-regular fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                  </i>
-                </td>
-                <td>310</td>
-                <td>Vila Olímpia</td>
-                <td>8:40</td>
-                <td>
-                  <a href="#"><i class="fa-regular fa-clock"></i></a>
-                </td>
-              </tr>
+              <% } %>
             </tbody>
           </table>
         </section>

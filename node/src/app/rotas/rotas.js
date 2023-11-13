@@ -1,4 +1,4 @@
-module.exports = (app, mssql) => 
+module.exports = (app) => 
 {
   app.use((req,res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -8,19 +8,21 @@ module.exports = (app, mssql) =>
   const locbusController = require("../controllers/CON_Usuario");
   const lbController = new locbusController();
 
- app.get("/login", (req, res) =>{
+  app.get("/login", (req, res) =>{
     console.log("Abrindo página de login...")
     res.render('./HTML_CSS/login')
- })
+  })
 
- app.get("/cadastre-se", (req, res)=>{
-  console.log("Abrindo página de cadastro...")
-  res.render('./HTML_CSS/register')
- })
- app.get('/mapa', lbController.getPontosEJS());
+  app.get("/cadastre-se", (req, res)=>{
+    console.log("Abrindo página de cadastro...")
+    res.render('./HTML_CSS/register') 
+  })
+  
+  app.get('/mapa', lbController.getPontosEJS());
 
- app.post("/verificaLogin", lbController.verificaLogin())
- app.post("/cadastrarUsuario", lbController.cadastroUsuario())
+  app.post("/verificaLogin", lbController.verificaLogin())
+  app.post("/cadastrarUsuario", lbController.cadastroUsuario())
 
+  app.get('/horarios', lbController.exibeView())
 
 } 

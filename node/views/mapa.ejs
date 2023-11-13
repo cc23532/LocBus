@@ -15,236 +15,39 @@
     <script>
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -22.929643096618637, lng: -47.03574887291138 },
-                zoom: 14
+                center: { lat: -22.96793034203473, lng: -46.995350186264304 },
+                zoom: 16
             });
 
-            // Suponha que 'pontos' contenha os dados dos pontos obtidos do banco de dados
-            var infowindow = new google.maps.InfoWindow();
+            <% for (let i = 0; i < pontos.length; i++) { %>
+                createMarker(map, <%= pontos[i].lat %>, <%= pontos[i].lon %>, '<%= pontos[i].logradouro %>', '<%= i %>');
+            <% } %>
+    
+            function createMarker(map, lat, lon, title, idPonto) {
+                var infowindow = new google.maps.InfoWindow();
+    
+                var marker = new google.maps.Marker({
+                    position: { lat: lat, lng: lon },
+                    map: map,
+                    title: title,
+                    icon: {
+                        url: '../assets/imgs/icon-bus-stop.png',
+                        scaledSize: new google.maps.Size(18, 18)
+                    }
+                });
+    
+                marker.addListener('click', function () {
+                    var content = '<h3>' + title + '</h3>';
+                    content += '<p><a href="/horarios?idPonto=' + idPonto + '">Ver horários</a></p>';
 
-            // Suponha que você tem vários pontos manualmente
-            var pontos = [
-                { id: 1, lat: -22.97203001196739, lng: -46.99539974348299, title: "Terminal Rodoviário De Valinhos" },
-                { id: 2, lat: -22.967500665038074, lng: -46.99533936439306, title: "Avenida Gessy Lever, 99" },
-                { id: 3, lat: -22.963183769464546, lng: -46.993687123583555, title: "Upa Unidade Valinhos" },
-                { id: 4, lat: -22.96841934578796, lng: -46.994851202058676, title: "Rua Quinze De Novembro, 256-328" },
-                { id: 5, lat: -22.9680494737643, lng: -47.00171412206294, title: "Avenida Dom Nery, 388" },
-                { id: 6, lat: -22.966524845805356, lng: -47.00425724903885, title: "Avenida Dom Nery, 718" },
-                { id: 7, lat: -22.965375989198805, lng: -47.005916548741794, title: "Sp-091, 872-992" },
-                { id: 8, lat: -22.962387469361293, lng: -47.0103213263816, title: "Parada Sim (01)" },
-                { id: 9, lat: -22.95941205855686, lng: -47.01466746489004, title: "Rodovia Francisco Von Zuben Sp-091, 1344-1396" },
-                { id: 10, lat: -22.95782182519404, lng: -47.0191324503005, title: "Rua Manoel Dos Santos Marta, 39-43" },
-                { id: 11, lat: -22.94965971647859, lng: -47.025337779716395, title: "Avenida Engenheiro Antônio Francisco De Paula Souza, 7108-7286" },
-                { id: 12, lat: -22.94598698357896, lng: -47.02922081166738, title: "Rodovia Francisco Von Zuben (Ponto 1)" },
-                { id: 13, lat: -22.942745294628658, lng: -47.03229419130476, title: "Rodovia Francisco Von Zuben (Ponto 2)" },
-                { id: 14, lat: -22.938660712199376, lng: -47.03458930918804, title: "Av. Eng. Antônio Francisco De Paula Souza - Rua Maria Bicego Santana" },
-                { id: 15, lat: -22.935670708413557, lng: -47.03685143957028, title: "Av. Eng. Antônio Francisco De Paula Souza - Rua Waldemar César Da Silveira" },
-                { id: 16, lat: -22.930062328958154, lng: -47.038319083265286, title: "Rua Da Abolição, 2381-2599" },
-                { id: 17, lat: -22.930062328958154, lng: -47.038319083265286, title: "Rua Da Abolição, 2201-2357" },
-                { id: 18, lat: -22.927191487393657, lng: 47.04186995813277, title: "Extra Abolição" },
-                { id: 19, lat: -22.92498039806481, lng: -47.04460678961979, title: "Rua Da Abolição - 2623-2711" },
-                { id: 20, lat: -22.922918592605917, lng: -47.04731806923949, title: "Rua Da Abolição, 512" },
-                { id: 21, lat: -22.921795236102493, lng: -47.048702079972905, title: "Rua Da Abolição, 1079" },
-                { id: 22, lat: -22.920411262450386, lng: -47.050506379617765, title: "Rua Da Abolição, 859" },
-                { id: 23, lat: -22.917782276373124, lng: -47.05363879875848, title: "Rua Da Abolição, 421-445" },
-                { id: 24, lat: -22.91593328035724, lng: -47.054512472613396, title: "Rua Da Abolição, 199" },
-                { id: 25, lat: -22.913806882543366, lng: -47.0563640684583, title: "Rua Proença, 1184-1230" },
-                { id: 26, lat: -22.911765942181393, lng: -47.057737541272154, title: "Av. Aquidaban (Pista Lateral), 187" },
-                { id: 27, lat: -22.91121726116298, lng: -47.05802346549096, title: "Av. Aquidaban - Rua José Paulino" },
-                { id: 28, lat: -22.908215406065644, lng: -47.05972183784189, title: "Rua José Paulino - Av. Dr. Moraes Sales" },
-                { id: 29, lat: -22.905354948982254, lng: -47.06115763682644, title: "Rua José Paulino - Av. Campos Sales" },
-                { id: 30, lat: -22.90689707271998, lng: -47.058768194987174, title: "Correios (Ponto 1)" },
-                { id: 31, lat: -22.909295881716154, lng: -47.05748437979816, title: "Parada 00480" },
-                { id: 32, lat: -22.91195550220122, lng: -47.056147298616864, title: "Parada 90012" },
-                { id: 33, lat: -22.917079440638666, lng: -47.05532046135011, title: "Av. Da Saudade, 330-396" },
-                { id: 34, lat: -22.9188110994137, lng: -47.054195487791475, title: "Av. Da Saudade, 664" },
-                { id: 35, lat: -22.92159659484324, lng: -47.0515380333105, title: "Câmara Municipal De Campinas" },
-                { id: 36, lat: -22.923321473748366, lng: -47.04922022122438, title: "Cemitério Da Saudade" },
-                { id: 37, lat: -22.923458521313428, lng: -47.04688589391473, title: "Rua Da Abolição, 1283" },
-                { id: 38, lat: -22.925396865588134, lng: -47.04451300002912, title: "Rua Da Abolição - 2713-2795" },
-                { id: 39, lat: -22.92731562348409, lng: -47.042115155374354, title: "Extra Abolição (Ponto 2)" },
-                { id: 40, lat: -22.93014670021568, lng: -47.03838696768361, title: "Rua Da Abolição, 2512" },
-                { id: 41, lat: -22.932155648004187, lng: -47.037712955686146, title: "Rua Frederico Ozanan, 128" },
-                { id: 42, lat: -22.93575462487408, lng: -47.03698148324864, title: "Av. Eng. Antônio Francisco De Paula Souza, 4406-4556" },
-                { id: 43, lat: -22.939043644853726, lng: -47.03467165663922, title: "Av. Eng. Antônio Francisco De Paula Souza, 4836-5130" },
-                { id: 44, lat: -22.942904658899717, lng: -47.03259723764136, title: "Rodovia Francisco Von Zuben (Ponto 3)" },
-                { id: 45, lat: -22.947462629161375, lng: -47.02794292184423, title: "Rodovia Francisco Von Zuben, 8702" },
-                { id: 46, lat: -22.94989959476078, lng: -47.02542025304204, title: "Avenida Engenheiro Antônio Francisco De Paula Souza, 6424-6484" },
-                { id: 47, lat: -22.95790878442568, lng: -47.01936185508603, title: "Rodovia Francisco Von Zuben Sp-091, 749-903" },
-                { id: 48, lat: -22.959865418742222, lng: -47.01525323534117, title: "Rodovia Francisco Von Zuben Sp-091, 269-469" },
-                { id: 49, lat: -22.96264734563732, lng: -47.01085059524762, title: "Parada Sim (02)" },
-                { id: 50, lat: -22.96558765042925, lng: -47.00638355134144, title: "Avenida Dom Nery, 933" },
-                { id: 51, lat: -22.967399746328343, lng: -47.00398736447956, title: "Avenida Dom Nery, 641" },
-                { id: 52, lat: -22.968491399291448, lng: -47.00141458678568, title: "Avenida Dom Nery, 353" },
-                { id: 53, lat: -22.96935093231473, lng: -46.99886795442613, title: "Avenida Dom Nery, 100" },
-                { id: 54, lat: -22.970248754661213, lng: -46.99624028296357, title: "Rua Treze De Maio, 130" },
-                { id: 55, lat: -22.997412756658658, lng: -47.00226653097725, title: "Rua Antenor Roncatti, 106-310" },
-                { id: 56, lat: -22.99795910738371, lng: -47.00132773167721, title: "Rua Antônio Trento, 80-136" },
-                { id: 57, lat: -22.998364062394128, lng: -47.00055317283845, title: "Rua Quitéria Olindina dos Santos, 24" },
-                { id: 58, lat: -22.99767056985416, lng: -47.00072811109308, title: "Rua Aracy Gonçalves Quiroz Silva, 31-127" },
-                { id: 59, lat: -22.996807004242584, lng: -47.00174375558577, title: "Rua João Catellan, 167" },
-                { id: 60, lat: -22.996180616338158, lng: -47.00296838386567, title: "Rua João Catellan" },
-                { id: 61, lat: -22.995118452805865, lng: -47.00227933260735, title: "Rua Ettore Evangelista, 45" },
-                { id: 62, lat: -22.99508109928707, lng: -47.0003040743818, title: "Rua Dr. Alfredo Zacarias, 295" },
-                { id: 63, lat: -22.99615406282027, lng: -46.99868178965355, title: "Rua Dr. Alfredo Zacarias, 600" },
-                { id: 64, lat: -22.998280395624885, lng: -46.99587635576824, title: "Rua Mario Olivo, 645" },
-                { id: 65, lat: -22.996867784738622, lng: -46.99415258445348, title: "Rua Mario Olivo, 453" },
-                { id: 66, lat: -22.99442309441576, lng: -46.99362704436811, title: "Rua Antonio Geraldo Capovilla" },
-                { id: 67, lat: -22.99182999719311, lng: -46.9932136194983, title: "Av. Joaquim Alves Corrêa, 1780" },
-                { id: 68, lat: -22.989520679641767, lng: -46.99396338996522, title: "Av. Joaquim Alves Corrêa, 1930" },
-                { id: 69, lat: -22.984697185505706, lng: -46.99622271521767, title: "Avenida Joaquim A. Corrêa, 2700" },
-                { id: 70, lat: -22.98291924292766, lng: -46.997083059478825, title: "Av. Joaquim Alves Corrêa, 2898" },
-                { id: 71, lat: -22.981847713256112, lng: -46.99651091215647, title: "Rua Americana, 885" },
-                { id: 72, lat: -22.980396475891077, lng: -46.99515973921607, title: "Rua Americana, 715" },
-                { id: 73, lat: -22.97939699662022, lng: -46.99530226644775, title: "Av. Piratininga, 225" },
-                { id: 74, lat: -22.97821223372656, lng: -46.99411041462368, title: "Av. Piratininga, 75" },
-                { id: 75, lat: -22.97552642197316, lng: -46.992403120151366, title: "Av. Rigesa, 121" },
-                { id: 76, lat: -22.973898715905953, lng: -46.99229698283796, title: "Rua Antônio Carlos, 709" },
-                { id: 77, lat: -22.972505517951717, lng: -46.99327951108735, title: "Rua Antônio Carlos, 443" },
-                { id: 78, lat: -22.97410177611244, lng: -46.99248339346712, title: "Rua Treze de Maio, 738-758" },
-                { id: 79, lat: -22.97604118784084, lng: -46.99295138359977, title: "Av. Rigesa, 182" },
-                { id: 80, lat: -22.978177725243146, lng: -46.994271211518914, title: "Rua Piratininga, 102" },
-                { id: 81, lat: -22.979596925981475, lng: -46.99564747333092, title: "Rua Piratininga, 238-308" },
-                { id: 82, lat: -22.980442991057075, lng: -46.99549304157292, title: "Rua Americana, 728" },
-                { id: 83, lat: -22.981864741382626, lng: -46.996774065738926, title: "Rua Americana, 890" },
-                { id: 84, lat: -22.981911037312713, lng: -46.997769299196854, title: "Av. Joaquim Alves Corrêa, 3006" },
-                { id: 85, lat: -22.98351540512159, lng: -46.997417180675576, title: "Av. Joaquim Alves Corrêa, 2815" },
-                { id: 86, lat: -22.984944115135622, lng: -46.99677160525148, title: "Av. Joaquim Alves Corrêa, 919" },
-                { id: 87, lat: -22.989800248418515, lng: -46.994624500631026, title: "Av. Joaquim Alves Corrêa, 1929" },
-                { id: 88, lat: -22.991938846067733, lng: -46.99365438032239, title: "Avenida Joaquim Alves Corrêa, 1777" },
-                { id: 89, lat: -22.9938449715058, lng: -46.99357636997228, title: "Rua Antonio Geraldo Capovilla" },
-                { id: 90, lat: -22.996943586842967, lng: -46.99437829787512, title: "Rua Mario Olivo, 412-516" },
-                { id: 91, lat: -22.997552765050248, lng: 46.99523822962508, title: "Rua Mario Olivo, 540" },
-                { id: 92, lat: -22.998206682118322, lng: -46.99594860807033, title: "Rua Mario Olivo, 650" },
-                { id: 93, lat: -22.99656968005286, lng: -46.99824554444053, title: "Rua Doutor Alfredo Zacharias, 603" },
-                { id: 94, lat: -22.995175863303135, lng: -47.001949040863984, title: "Rua Baptista Canavassi, 60" },
-                { id: 95, lat: -22.996365239162444, lng: -47.00253592445752, title: "Rua Baptista Canavassi, 190" },
-                { id: 96, lat: -22.997438575160153, lng: -47.00229564908765, title: "Rua Antenor Roncatti, 106-310" },
-                { id: 97, lat: -22.946751968643945, lng: -46.97144661400007, title: "Avenida Presidente Tancredo Neves, 618" },
-                { id: 98, lat: -22.94742699790688, lng: -46.97286786908216, title: "Rua Augusto Tassi, 134" },
-                { id: 99, lat: -22.947725404872063, lng: -46.97547157737096, title: "Rua Vanderlei Bernardes, 3" },
-                { id: 100, lat: -22.94912637444233, lng: -46.97606483439114, title: "Rua Valmir Antônio Capelari, 981-1021" },
-                { id: 101, lat: -22.948408380669306, lng: -46.97782550335932, title: "Rua dos Amarílis, 415" },
-                { id: 102, lat: -22.949181620638864, lng: -46.980080287889294, title: "Rua dos Gerânios, 301-357" },
-                { id: 103, lat: -22.94969962656257, lng: -46.978987366336035, title: "Rua das Acácias, 322" },
-                { id: 104, lat: -22.9512260773237, lng: -46.979284342364394, title: "Rua dos Lírios, 63-223" },
-                { id: 105, lat: -22.952125109807675, lng: -46.97983206353102, title: "Rua dos Gerânios" },
-                { id: 106, lat: -22.95272513039578, lng: -46.981411334113126, title: "Rua dos Manacás, 94" },
-                { id: 107, lat: -22.953291047175078, lng: -46.98275991212221, title: "Rua dos Manacás, 37" },
-                { id: 108, lat: -22.95455759254338, lng: -46.98465932159231, title: "Rodovia Flávio de Carvalho, 2618" },
-                { id: 109, lat: -22.95678257160506, lng: -46.98430779752904, title: "Av. Dr. Altino Gouveia, 143" },
-                { id: 110, lat: -22.95913130838004, lng: -46.98379281339652, title: "Avenida João Antunes dos Santos, 887" },
-                { id: 111, lat: -22.96061113254161, lng: -46.98356178452444, title: "Avenida João Antunes dos Santos, 765-809" },
-                { id: 112, lat: -22.96183316966471, lng: -46.98341998635118, title: "Av. João Antunes dos Santos, 583" },
-                { id: 113, lat: -22.964530498933236, lng: -46.98238380974978, title: "Av. João Antunes dos Santos, 299" },
-                { id: 114, lat: -22.96660250732143, lng: -46.98133857919353, title: "Av. João Antunes dos Santos, 45" },
-                { id: 115, lat: -22.96922272422525, lng: -46.98320843431433, title: "Rua Guilherme Mamprim, 821" },
-                { id: 116, lat: -22.969982084797927, lng: -46.98499854764834, title: "Rua Orozimbo Maia (Ponto 01)" },
-                { id: 117, lat: -22.96893005875153, lng: -46.98704239097029, title: "Rua Orozimbo Maia (Ponto 02)" },
-                { id: 118, lat: -22.967409754393124, lng: -46.98994796720329, title: "Rua Orozimbo Maia, 281" },
-                { id: 119, lat: -22.966792357460537, lng: -46.98969583954941, title: "Rua Paraná, 310" },
-                { id: 120, lat: -22.9657511810093, lng: -46.99036824868027, title: "Rua Mato Grosso, 287-361" },
-                { id: 121, lat: -22.963849566070135, lng: -46.999589683282395, title: "Av. Invernada, 308" },
-                { id: 122, lat: -22.966945254419212, lng: -46.99524296090599, title: "Avenida Gessy Lever, 291" },
-                { id: 123, lat: -22.967465368269337, lng: -46.99960255954823, title: "Rua Campos Salles, 241" },
-                { id: 124, lat: -22.96615393419802, lng: -47.00074822434134, title: "Rua Campos Salles, 435" },
-                { id: 125, lat: -22.962732741969273, lng: -47.003532161651094, title: "Rua Campos Salles, 898" },
-                { id: 126, lat: -22.960996194616964, lng: -47.00447515355976, title: "Rua Campos Salles, 1170" },
-                { id: 127, lat: -22.959474753466207, lng: -47.00501842950038, title: "Rua Campos Salles, 1284" },
-                { id: 128, lat: -22.957087763769323, lng: -47.00689184549617, title: "Rua Campos Salles, 1610" },
-                { id: 129, lat: -22.956489951942196, lng: -47.008932815179136, title: "Rua Campos Salles, 1800" },
-                { id: 130, lat: -22.95612176186386, lng: -47.00998922963989, title: "Rua Campos Salles, 1962" },
-                { id: 131, lat: -22.955326286041824, lng: -47.01096665981728, title: "Rua José Fávero, 2-50" },
-                { id: 132, lat: -22.953453284657012, lng: -47.012250440963996, title: "Rua José Fávero, 122" },
-                { id: 133, lat: -22.95249155638999, lng: -47.01440338919659, title: "Rua Campos Salles, 2546-2774" },
-                { id: 134, lat: -22.951008346317824, lng: -47.016814143857744, title: "Rua Campos Salles, 3200" },
-                { id: 135, lat: -22.949358133230575, lng: -47.01798752001707, title: "Av. Eng. Augusto de Figueiredo, 3511" },
-                { id: 136, lat: -22.9473297187344, lng: -47.01861687632258, title: "Av. Eng. Augusto de Figueiredo, 3387" },
-                { id: 137, lat: -22.94660773335515, lng: -47.01965691428245, title: "Rua Benedito José do Carmo, 66" },
-                { id: 138, lat: -22.945019853779314, lng: -47.0201698966691, title: "Rua Dr. Heitor Teixeira Penteado Filho, 247" },
-                { id: 139, lat: -22.94327624731848, lng: -47.02086325531135, title: "Rua Dr. Heitor Teixeira Penteado Filho, 67" },
-                { id: 140, lat: -22.942009048802294, lng: -47.02121526816082, title: "Av. Eng. Augusto de Figueiredo, 2851" },
-                { id: 141, lat: -22.938158264222576, lng: -47.024538056122346, title: "Av. Eng. Augusto de Figueiredo, 2187" },
-                { id: 142, lat: -22.93620335972611, lng: -47.02653279559069, title: "Av. Eng. Augusto de Figueiredo, 1904" },
-                { id: 143, lat: -22.933889855876803, lng: -47.030223596963445, title: "Av. Eng. Augusto de Figueiredo, 1435" },
-                { id: 144, lat: -22.931725693130943, lng: -47.032932534377814, title: "Av. Eng. Augusto de Figueiredo, 985-1109" },
-                { id: 145, lat: -22.929129720535073, lng: -47.035394050214045, title: "Av. Eng. Augusto de Figueiredo, 661" },
-                { id: 146, lat: -22.928000528461457, lng: -47.03867357789538, title: "Av. Eng. Augusto de Figueiredo, 89" },
-                { id: 147, lat: -22.915687361820112, lng: -47.054623631104626, title: "R. Da Abolição, 169" },
-                { id: 148, lat: -22.915922374676764, lng: -47.056301387420696, title: "Rua Dr. Álvaro Ribeiro, 396" },
-                { id: 149, lat: -22.92030640130678, lng: -47.056742708921, title: "Av. Washington Luiz, 434" },
-                { id: 150, lat: -22.918412077402365, lng: -47.0606749388691, title: "Av. Mal. Carmona, 419" },
-                { id: 151, lat: -22.917335119728442, lng: -47.06667861564061, title: "Av. Pref. Faria Lima, 141-227" },
-                { id: 152, lat: -22.9061718103877, lng: -47.068050616902454, title: "Av. Andrade Neves, 214-240" },
-                { id: 153, lat: -22.90419993152223, lng: -47.06914582982714, title: "Av. Andrade Neves, 452" },
-                { id: 154, lat: -22.902000648834182, lng: -47.07032990429642, title: "Av. Andrade Neves, 762" },
-                { id: 155, lat: -22.900709756517468, lng: -47.0724017948008, title: "Rua Dr. Otávio Mendes, 155" },
-                { id: 156, lat: -22.906355260360957, lng: -47.07172418047644, title: "Terminal Metropolitano Prefeito Magalhães Teixeira" },
-                { id: 157, lat: 22.90530933652437, lng: -47.06172986969223, title: "Av. Dr. Campos Salles, 718" },
-                { id: 158, lat: -22.928071309256683, lng: -47.038902353763845, title: "Av. Eng. Augusto Figueiredo, 88-348" },
-                { id: 159, lat: -22.929281750922502, lng: -47.03527064276384, title: "Av. Eng. Augusto de Figueiredo, 688" },
-                { id: 160, lat: -22.933918383493825, lng: -47.03037829352017, title: "Av. Eng. Augusto de Figueiredo, 1446" },
-                { id: 161, lat: -22.936227531569084, lng: -47.02674418687336, title: "Av. Eng. Augusto de Figueiredo, 1894" },
-                { id: 162, lat: -22.938012512944564, lng: -47.024880554512734, title: "Av. Eng. Augusto de Figueiredo, 2130" },
-                { id: 163, lat: -22.940393686538645, lng: -47.02271064742985, title: "Av. Eng. Augusto de Figueiredo, 2494" },
-                { id: 164, lat: -22.94172242618387, lng: -47.02166860921759, title: "Av. Eng. Augusto Figueiredo, 2820" },
-                { id: 165, lat: -22.943352495729656, lng: -47.021021358654735, title: "Rua Dr. Heitor Teixeira Penteado Filho, 60" },
-                { id: 166, lat: -22.945219819001863, lng: -47.020342759777236, title: "Rua Dr. Heitor Teixeira Penteado Filho, 248" },
-                { id: 167, lat: -22.946746262546313, lng: -47.01965611426443, title: "Rua Benedito José do Carmo, 62" },
-                { id: 168, lat: -22.94889264027484, lng: -47.01835792510348, title: "Av. Eng. Augusto de Figueiredo, 3478" },
-                { id: 169, lat: -22.951143915511445, lng: -47.016782316310625, title: "Rua Campos Salles, 2789-3113" },
-                { id: 170, lat: -22.953823591857827, lng: -47.01198700814049, title: "Rua José Fávero, 179" },
-                { id: 171, lat: -22.955243736793367, lng: -47.011120654627376, title: "Rua José Fávero, 11" },
-                { id: 172, lat: -22.956603881286018, lng: -47.0089843209032, title: "Rua Campos Salles, 1821" },
-                { id: 173, lat: -22.957725156511184, lng: -47.00642012908056, title: "Rua Campos Salles, 1401-1479" },
-                { id: 174, lat: -22.959500068847955, lng: -47.00512591748012, title: "Rua Campos Salles, 1373" },
-                { id: 175, lat: -22.961065866447644, lng: -47.004551924748554, title: "Rua Campos Salles, 1053" },
-                { id: 176, lat: -22.96269246151686, lng: -47.00463674961131, title: "Rua Antônio Sales Pupo, 117" },
-                { id: 177, lat: -22.964931351651455, lng: -47.00396485625291, title: "Rua Paulo Setúbal, 100-150" },
-                { id: 178, lat: -22.96577673334123, lng: -46.991932466611914, title: "Rua Rio Grande do Sul, 180" },
-                { id: 179, lat: -22.96777216507779, lng: -46.989853754627454, title: "Rua Orozimbo Maia, 280" },
-                { id: 180, lat: -22.96910758145247, lng: -46.98745334519529, title: "Estrada do Jequitibá, 999" },
-                { id: 181, lat: -22.970125032691595, lng: -46.98180729522708, title: "Estr. do Jequitibá, 1006" },
-                { id: 182, lat: -22.96955456946627, lng: -46.981270853418756, title: "Rua Ezequiel Benedito Silva" },
-                { id: 183, lat: -22.966462666325675, lng: -46.98123866690775, title: "Av. João Antunes dos Santos, 62" },
-                { id: 184, lat: -22.9618209085563, lng: -46.983277572972604, title: "Av. João Antunes dos Santos, 600" },
-                { id: 185, lat: -22.96073900834494, lng: -46.98343358445537, title: "Av. João Antunes dos Santos, 736" },
-                { id: 186, lat: -22.959060038459057, lng: -46.98361284590968, title: "Av. João Antunes dos Santos, 876-950" },
-                { id: 187, lat: -22.95705865849403, lng: -46.98392375248944, title: "Av. João Antunes dos Santos, 1162" },
-                { id: 188, lat: -22.954551101048438, lng: -46.9845566016941, title: "Rua Antônio Tassi, 2618" },
-                { id: 189, lat: -22.953297208262473, lng: -46.982628298270015, title: "Rua dos Manacás, 206-224" },
-                { id: 190, lat: -22.95280817908764, lng: -46.98145885513854, title: "Rua dos Manacás, 104" },
-                { id: 191, lat: -22.952202856030034, lng: -46.97970822144637, title: "Rua dos Gerânios, 2-58" },
-                { id: 192, lat: -22.95131370357564, lng: -46.97924956370233, title: "Rua dos Lírios, 68" },
-                { id: 193, lat: -22.949539140361548, lng: -46.97905166073247, title: "Rua das Acácias, 281" },
-                { id: 194, lat: -22.949151518546937, lng: -46.97999462483923, title: "Rua dos Gerânios, 302" },
-                { id: 195, lat: -22.94794372446567, lng: -46.98001340030121, title: "Rua dos Gerânios, 418-476" },
-                { id: 196, lat: -22.948474759991356, lng: -46.97783812879098, title: "Rua dos Amarílis, 388" },
-                { id: 197, lat: -22.949042687850152, lng: -46.97598136960055, title: "Rua Valmir Antônio Capelari, 982-1022" },
-                { id: 198, lat: -22.947331796040274, lng: -46.97345221413784, title: "Rua Vanderlei Bernardes, 234" },
-                { id: 199, lat: -22.947197646882504, lng: -46.97216793893328, title: "Rua Renato Prado, 496" }
-
-            ]
-
-            pontos.forEach(function (ponto) {
-            var marker = new google.maps.Marker({
-                position: { lat: ponto.lat, lng: ponto.lng },
-                map: map,
-                title: ponto.title,
-                icon: {
-                    url: '../assets/imgs/icon-bus-stop.png', // URL relativa ao ícone personalizado
-                    scaledSize: new google.maps.Size(15,15) // Tamanho do ícone
-                }
-            });
-
-            // Configure um ouvinte de evento para exibir o título do marcador quando o marcador é clicado
-            marker.addListener('click', function() {
-                infowindow.setContent(marker.title);
-                infowindow.open(map, marker);
-            });
-        });  
+                    infowindow.setContent(content);
+                    infowindow.open(map, marker);
+                });
+            }
         }
     </script>
+    
+    
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGJHcT9GwLSLre5lNgyS0RmaqaA6R8IQ&callback=initMap" async defer></script>
 </body>
