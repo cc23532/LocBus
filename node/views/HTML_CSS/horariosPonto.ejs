@@ -80,7 +80,7 @@
             </thead>
 
             <tbody>
-              <% for (let horario of horarios) { %>
+              <% for (let horarioPonto of horariosPonto) { %>
 
               <tr>
                 <td>
@@ -89,11 +89,11 @@
                     <i class="fa-solid fa-star"></i>
                   </i>
                 </td>
-                <td><%= horario.idLinha %></td>
-                <td><%= horario.sentidoLinha %></td>
-                <td><%= horario.horarioTabela %></td>
+                <td><%= horarioPonto.idLinha %></td>
+                <td><%= horarioPonto.sentidoLinha %></td>
+                <td><%= horarioPonto.horarioTabela %></td>
                 <td>
-                  <a href="#"><i class="fa-regular fa-clock"></i></a>
+                  <a href='/horariosLinha/<%= horarioPonto.idLinha %>'><i class="fa-regular fa-clock"></i></a>
                 </td>
               </tr>
 

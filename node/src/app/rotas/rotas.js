@@ -23,6 +23,8 @@ module.exports = (app) =>
   app.post("/verificaLogin", lbController.verificaLogin())
   app.post("/cadastrarUsuario", lbController.cadastroUsuario())
 
-  app.get('/horarios', lbController.exibeView())
+  app.get('/horariosPonto', lbController.exibeView())
+
+  app.get('/horariosLinha/:idLinha', lbController.exibeHorarios());
 
 } 

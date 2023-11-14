@@ -56,14 +56,30 @@ class CON_Usuario
       const lbDAO= new locbusDAO(bd)
       const idPonto= req.query.idPonto
       lbDAO.selectView(idPonto)
-      .then((horarios) =>{
+      .then((horariosPonto) =>{
         console.log("Abrindo página de horários do ponto " + idPonto+ "...")
-        res.render('./HTML_CSS/horarios', {idPonto: idPonto, horarios: horarios})
+        res.render('./HTML_CSS/horariosPonto', {idPonto: idPonto, horariosPonto: horariosPonto})
       })
       .catch((error) => {
         console.error('Erro na obtenção de dados do servidor:', error);
         res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
     });
+    }
+  }
+
+  exibeHorarios(){
+    return function (req, res){
+      const lbDAO= new locbusDAO(bd)
+      const idLinha= req.params.idLinha
+      lbDAO.selectHorarios(idLinha)
+      .then((horariosLinha) =>{
+        console.log("Abrindo página de horários da Linha " + idLinha+ "...")
+        res.render('./HTML_CSS/horariosLinha', {idLinha: idLinha, horariosLinha: horariosLinha})
+      })
+      .catch((error) => {
+        console.error('Erro na obtenção de dados do servidor:', error);
+        res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
+      })
     }
   }
 }

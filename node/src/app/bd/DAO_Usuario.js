@@ -58,6 +58,21 @@ class DAO_Usuario{
           });
       });
   }
+  
+  selectHorarios(idLinha) {
+    return new Promise((resolve, reject) => {
+      const sql = `SELECT sentido, dia, horario FROM lb_Horarios_Partida WHERE idLinha=?`;
+      this._bd.query(sql, [idLinha], (erro, recordset) => {
+        if (erro) {
+          console.log(erro);
+          return reject("Select falhou");
+        }
+        resolve(recordset);
+      });
+    });
+  }
+  
+  
 };
 
 module.exports= DAO_Usuario;

@@ -20,7 +20,7 @@
             });
 
             <% for (let i = 0; i < pontos.length; i++) { %>
-                createMarker(map, <%= pontos[i].lat %>, <%= pontos[i].lon %>, '<%= pontos[i].logradouro %>', '<%= i %>');
+                createMarker(map, <%= pontos[i].lat %>, <%= pontos[i].lon %>, '<%= pontos[i].logradouro %>', '<%= i+1 %>');
             <% } %>
     
             function createMarker(map, lat, lon, title, idPonto) {
@@ -38,7 +38,7 @@
     
                 marker.addListener('click', function () {
                     var content = '<h3>' + title + '</h3>';
-                    content += '<p><a href="/horarios?idPonto=' + idPonto + '">Ver horários</a></p>';
+                    content += '<p><a href="/horariosPonto?idPonto=' + idPonto + '">Ver horários</a></p>';
 
                     infowindow.setContent(content);
                     infowindow.open(map, marker);

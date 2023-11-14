@@ -1,0 +1,49 @@
+<!-- views/horarios.ejs -->
+
+<%
+  function agruparPorSentidoDia(horariosLinha) {
+    const agrupado = {};
+
+    // Agrupa os horários por sentido e dia
+    horariosLinha.forEach((horario) => {
+      if (!agrupado[horario.sentido]) {
+        agrupado[horario.sentido] = {};
+      }
+
+      if (!agrupado[horario.sentido][horario.dia]) {
+        agrupado[horario.sentido][horario.dia] = [];
+      }
+
+      agrupado[horario.sentido][horario.dia].push(horario.horario);
+    });
+
+    return agrupado;
+  }
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horários</title>
+</head>
+<body>
+
+  <% const horariosAgrupados = agruparPorSentidoDia(horariosLinha); %>
+
+  <% for (const sentido in horariosAgrupados) { %>
+    <h2><%= sentido %></h2>
+
+    <% for (const dia in horariosAgrupados[sentido]) { %>
+      <h3><%= dia %></h3>
+      <ul>
+        <% for (const horario of horariosAgrupados[sentido][dia]) { %>
+          <li><%= horario %></li>
+        <% } %>
+      </ul>
+    <% } %>
+  <% } %>
+
+</body>
+</html>
