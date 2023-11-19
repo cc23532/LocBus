@@ -1,54 +1,90 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Meu Mapa</title>
-    <style>
-        #map {
-            height: 400px;
-            width: 50%;
-        }
-    </style>
-</head>
-<body>
-    <div id="map"></div>
+    <link rel="stylesheet" href="./css/mapa.css" />
+
+    <!-- link FONT AWSONE CDN -->
+    <script
+      src="https://kit.fontawesome.com/eeb24722a1.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <a href="" class="logo"
+        ><img src="./assets/imgs/lockbus-logo.png" alt="Logo LocBus"
+      /></a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#" id="active">Início</a></li>
+          <li><a href="#">Horários</a></li>
+          <li><a href="#">Linhas</a></li>
+          <li><a href="#">Quem Somos</a></li>
+          <li><a href="#">Fale Conosco</a></li>
+        </ul>
+      </nav>
+
+      <div class="main-header">
+        <div class="login-icon">
+          <a href="#"><i class="fa-solid fa-circle-user"></i></a>
+        </div>
+        <div class="login-text">
+          <a href="#"><p>Ainda não fez login?</p> </a>
+          <a href="#"><p>Fazer Login</p></a>
+        </div>
+      </div>
+    </header>
+    <section class="container-mapa">
+      <div class="menu">
+        <img src="./assets/imgs/bus-home.webp" alt="" />
+        <p>Para onde deseja ir?</p>
+        <input type="text" placeholder="Escolha seu local de partida" />
+        <input type="text" placeholder="Escolha o destino" />
+      </div>
+      <div id="map"></div>
+    </section>
 
     <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -22.96793034203473, lng: -46.995350186264304 },
-                zoom: 16
-            });
+      function initMap() {
+          var map = new google.maps.Map(document.getElementById('map'), {
+              center: { lat: -22.96793034203473, lng: -46.995350186264304 },
+              zoom: 16
+          });
 
-            <% for (let i = 0; i < pontos.length; i++) { %>
-                createMarker(map, <%= pontos[i].lat %>, <%= pontos[i].lon %>, '<%= pontos[i].logradouro %>', '<%= i+1 %>');
-            <% } %>
-    
-            function createMarker(map, lat, lon, title, idPonto) {
-                var infowindow = new google.maps.InfoWindow();
-    
-                var marker = new google.maps.Marker({
-                    position: { lat: lat, lng: lon },
-                    map: map,
-                    title: title,
-                    icon: {
-                        url: '../assets/imgs/icon-bus-stop.png',
-                        scaledSize: new google.maps.Size(18, 18)
-                    }
-                });
-    
-                marker.addListener('click', function () {
-                    var content = '<h3>' + title + '</h3>';
-                    content += '<p><a href="/horariosPonto?idPonto=' + idPonto + '">Ver horários</a></p>';
+          <% for (let i = 0; i < pontos.length; i++) { %>
+              createMarker(map, <%= pontos[i].lat %>, <%= pontos[i].lon %>, '<%= pontos[i].logradouro %>', '<%= i+1 %>');
+          <% } %>
 
-                    infowindow.setContent(content);
-                    infowindow.open(map, marker);
-                });
-            }
-        }
+          function createMarker(map, lat, lon, title, idPonto) {
+              var infowindow = new google.maps.InfoWindow();
+
+              var marker = new google.maps.Marker({
+                  position: { lat: lat, lng: lon },
+                  map: map,
+                  title: title,
+                  icon: {
+                      url: '../assets/imgs/icon-bus-stop.png',
+                      scaledSize: new google.maps.Size(18, 18)
+                  }
+              });
+
+              marker.addListener('click', function () {
+                  var content = '<h3>' + title + '</h3>';
+                  content += '<p><a href="/horariosPonto?idPonto=' + idPonto + '">Ver horários</a></p>';
+
+                  infowindow.setContent(content);
+                  infowindow.open(map, marker);
+              });
+          }
+      }
     </script>
-    
-    
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGJHcT9GwLSLre5lNgyS0RmaqaA6R8IQ&callback=initMap" async defer></script>
-</body>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzGJHcT9GwLSLre5lNgyS0RmaqaA6R8IQ&callback=initMap"
+      async
+      defer
+    ></script>
+  </body>
 </html>
