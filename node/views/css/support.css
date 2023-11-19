@@ -19,7 +19,10 @@
 
 body {
     min-height: 100vh;
-
+    width: 100%;
+    background-color: #F7F7F7;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 header {
@@ -104,22 +107,6 @@ header .logo img {
     font-weight: 600;
 }
 
-/* suporte icon */
-.suporte-icon {
-    margin-right: 2rem;
-}
-
-.suporte-icon a {
-    color: var(--laranja);
-    font-size: 2rem;
-    text-decoration: none;
-    transition: all .3s ease;
-}
-
-.suporte-icon a:hover {
-    opacity: .8;
-}
-
 @media (max-width: 1280px) {
     header {
         padding: 14px 10%;
@@ -149,6 +136,58 @@ header .logo img {
     .login-icon i {
         font-size: 1.8rem;
     }
+}
+
+main.suporte-main {
+    width: 40vw;
+    margin: 0 auto;
+    display: flex;
+    text-align: center;
+}
+
+.suporte {
+    margin: 3% 23%;
+}
+
+.suporte-title h1 {
+    text-align: center;
+    color: #737B97;
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.suporte-container-title {
+    color: #737B97;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+    font-style: italic;
+}
+
+.suporte-container-title:first-child {
+    margin-bottom: 2rem;
+}
+
+.suporte-container p {
+    color: #737B97;
+    font-weight: 400;
+}
+
+.suporte-container p#suporte-email {
+    color: var(--azul);
+    font-weight: 700;
+}
+
+.suporte-container p#suporte-number {
+    color: var(--azul);
+    font-weight: 700;
+    font-style: italic;
+}
+
+.suporte-bio {
+    color: #737B97;
+    font-style: italic;
+    opacity: .9;
 }
 
 /* ----- FOOTER ----- */

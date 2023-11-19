@@ -17,6 +17,11 @@ module.exports = (app) =>
     console.log("Abrindo página de cadastro...")
     res.render('./HTML_CSS/register') 
   })
+
+  app.get('/suporte', (req, res) => {
+    console.log('Abrindo página de suporte...');
+    res.render('./HTML_CSS/support')
+  })
   
   app.get('/mapa', lbController.getPontosEJS());
 
