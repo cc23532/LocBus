@@ -10,9 +10,8 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
-    <header>
-      <a href="" class="logo"
+   <header>
+      <a href="#" class="logo"
         ><img src="./assets/imgs/lockbus-logo.png" alt="Logo LocBus"
       /></a>
 
@@ -28,7 +27,7 @@
 
       <div class="main-header">
         <div class="login-icon">
-          <a href="#"><i class="fa-solid fa-circle-user"></i></a>
+          <a href="#"><i class="fas fa-circle-user"></i></a>
         </div>
         <div class="login-text">
           <a href="#"><p>Ainda não fez login?</p> </a>
@@ -37,12 +36,38 @@
       </div>
     </header>
     <section class="container-mapa">
-      <div class="menu">
-        <img src="./assets/imgs/bus-home.webp" alt="" />
-        <p>Para onde deseja ir?</p>
-        <input type="text" placeholder="Escolha seu local de partida" />
-        <input type="text" placeholder="Escolha o destino" />
-      </div>
+      <form action="#">
+        <div class="menu">
+          <div class="menu-header">
+            <img src="./assets/imgs/mapa-header.png" id="img-header" alt="">
+            <h2>Para onde <br> deseja ir?</h2>
+          </div>
+          <div class="menu-main">
+            <div class="menu-container">
+              <div class="distance-img">
+                <img src="./assets/imgs/rota.png" alt="">
+              </div>
+              <div class="inputs">
+                <div class="input-container">
+                  <input type="text" placeholder="Escolha seu local de partida" />
+                </div>
+                <div class="input-container">
+                  <input type="text" placeholder="Escolha o destino" />
+                </div>
+              </div>
+            </div>
+            <div class="gray-box">
+              <i class="fas fa-clock"></i>
+              <select>
+                <option value="sairAgora">Sair Agora</option>
+                <option value="10min">10 min</option>
+                <option value="20min">20 min</option>
+              </select>
+              <button type="submit">Buscar asd</button>
+            </div>
+          </div>
+        </div>
+      </form>
       <div id="map"></div>
     </section>
 
