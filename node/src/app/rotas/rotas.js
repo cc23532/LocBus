@@ -22,6 +22,11 @@ module.exports = (app) =>
     console.log('Abrindo página de suporte...');
     res.render('./HTML_CSS/support')
   })
+
+  app.get('/sobre-nos', (req, res) => {
+    console.log('Abrindo página sobre nós...');
+    res.render('./HTML_CSS/about-us')
+  })
   
   app.get('/mapa', lbController.getPontosEJS());
 

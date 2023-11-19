@@ -22,6 +22,8 @@ body {
 
 }
 
+/* ----- HEADER ----- */
+
 header {
     width: 100%;
     top: 0;
@@ -152,6 +154,7 @@ header .logo img {
 }
 
 
+/* ----- FORM ----- */
 .section-form {
     display: flex;
     justify-content: center;

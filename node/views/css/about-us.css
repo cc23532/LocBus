@@ -19,12 +19,10 @@
 
 body {
     min-height: 100vh;
-    width: 100%;
     background-color: #F7F7F7;
     scroll-behavior: smooth;
     overflow-x: hidden;
 }
-
 /* ----- HEADER ----- */
 header {
     width: 100%;
@@ -138,63 +136,51 @@ header .logo img {
         font-size: 1.8rem;
     }
 }
-
 /* ----- MAIN ----- */
-main.suporte-main {
-    width: 40vw;
+/* centraliza */
+#aboutUs-main {
     margin: 0 auto;
+}
+
+/* separa em 2 blocos iguais */
+.container-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 5% 10%;
+}
+
+.left-container {
+    width: 100%;
+}
+
+.left-container img {
+    width: 100%;
+}
+
+.right-container {
     display: flex;
-    text-align: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.suporte {
-    margin: 3% 23%;
-}
-
-/* titulo */
-.suporte-title h1 { 
-    text-align: center;
-    color: #737B97;
-    font-weight: 400;
+.right-container h3 {
     font-size: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.suporte-container-title {
-    color: #737B97;
-    text-transform: uppercase;
-    margin-bottom: .5rem;
-    font-style: italic;
-}
-
-.suporte-container-title:first-child {
-    margin-bottom: 2rem;
-}
-
-.suporte-container p {
-    color: #737B97;
-    font-weight: 400;
-}
-
-.suporte-container p#suporte-email {
+    margin-bottom: 10px;
     color: var(--azul);
-    font-weight: 700;
 }
 
-.suporte-container p#suporte-number {
-    color: var(--azul);
-    font-weight: 700;
-    font-style: italic;
-}
-
-/* descrioções */
-.suporte-bio {
+.right-container p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--preto);
+    font-weight: 500;
+    font-size: 1rem;
     color: #737B97;
     font-style: italic;
-    opacity: .9;
 }
 
-/* ----- FOOTER ----- */
+/* ----- FOOTER -----*/
 footer {
     width: 100%;
     background-color: var(--azul);
