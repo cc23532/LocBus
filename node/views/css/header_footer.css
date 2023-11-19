@@ -1,62 +1,97 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    list-style: none;
+    text-decoration: none;
+    scroll-behavior: smooth;
+}
+
 :root {
     --azul: #004aad;
     --laranja: #ff914d;
     --branco: #fff;
     --preto: #000;
-    --cinza: #737B97 --cinza-claro: #d5d1defe;
-    --branco-cinza: #F5F5F5;
 }
 
-/* ------- HEADER -------*/
+body {
+    min-height: 100vh;
+
+}
 
 header {
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 10%;
-    background-color: var(--azul);
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .3);
+    justify-content: space-between;
+    background: var(--azul);
+    padding: 15px 8%;
+    transition: all .5s ease;
 }
 
-header img {
-    max-width: 12em;
+header .logo {
+    width: 15%;
 }
 
-.nav-links li {
-    display: inline-block;
-    padding: 0px 20px;
+header .logo img {
+    width: 100%;
 }
 
-.nav-links li a {
-    transition: all .3s ease 0s;
-    color: #fff;
+.nav-links {
+    display: flex;
+}
+
+.nav-links a {
+    color: var(--branco);
+    font-size: .9rem;
     font-weight: 500;
-    font-size: .8rem;
+    padding: 5px 0;
+    margin: 0px 20px;
+    transition: all .5s ease;
 }
 
-.nav-links li a:hover {
+.nav-links a:hover {
     color: var(--laranja);
 }
 
-.login {
+.nav-links a#active {
+    color: var(--laranja);
+}
+
+.main-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+}
+
+.main-header a {
+    margin-left: 10px;
+    color: var(--branco);
+    font-size: .9rem;
+    font-weight: 500;
+    transition: all .5s ease;
+}
+
+.main-header a:hover {
+    color: var(--laranja);
 }
 
 .login-icon i {
     color: var(--laranja);
-    font-size: 1.3rem;
-    margin: .4em;
+    font-size: 1.8rem;
 }
 
 .login-text {
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
 
-.login-text a  {
+.login-text a {
     color: #c0b7ff;
     font-size: .6em;
     font-weight: 600;
@@ -65,62 +100,53 @@ header img {
 .login-text a:last-child {
     color: rgba(0, 0, 0, .7);
     font-size: .9em;
-    line-height: 1em;
+    line-height: -8rem;
     font-weight: 600;
 }
 
-/* ------- FOOTER -------*/
-footer {
-    width: 100vw;
-    height: 100%;
-    background-color: var(--azul);
-    color: white;
-
+/* suporte icon */
+.suporte-icon {
+    margin-right: 2rem;
 }
 
-section.footer-container {
-    display: grid;
-    grid-template-columns: 1fr, 1fr, 1fr;
-    padding: 3% 5%;
-    justify-content: space-between;
+.suporte-icon a {
+    color: var(--laranja);
+    font-size: 2rem;
+    text-decoration: none;
+    transition: all .3s ease;
 }
 
-.footer-block-list {
-    display: flex;
+.suporte-icon a:hover {
+    opacity: .8;
 }
 
-.footer-blocks {
-    padding-right: 8rem;
+@media (max-width: 1280px) {
+    header {
+        padding: 14px 10%;
+        transition: .2s;
+    }
+
+    .nav-links a {
+        padding: 5px 0;
+        margin: 0px 20px;
+    }
 }
 
-.footer-blocks:last-child {
-    padding-right: 0;
-}
+@media (max-width: 1090px) {
+    header {
+        padding: 14px 5%;
+        transform: .2s;
+    }
 
-.footer-header {
-    margin-bottom: 1.2rem;
-}
+    .nav-links a {
+        margin: 0px 15px;
+    }
 
-.footer-header span {
-    text-transform: uppercase;
-    font-size: .8rem;
-    font-weight: 700;
-    color: var(--branco);
-}
+    .login-text {
+        display: none;
+    }
 
-.footer-body {
-    display: flex;
-    flex-direction: column;
-}
-
-.footer-body a {
-    color: var(--branco-cinza);
-    font-weight: 500;
-    font-size: 1rem;
-    line-height: 1.9rem;
-}
-
-.footer-img img {
-    float: right;
-    width: 25rem;
+    .login-icon i {
+        font-size: 1.8rem;
+    }
 }
