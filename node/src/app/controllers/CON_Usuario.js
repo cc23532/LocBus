@@ -82,6 +82,31 @@ class CON_Usuario
       })
     }
   }
+
+  exibeItinerarioMapa() {
+    return async function (req, res) {
+        const lbDAO = new locbusDAO(bd);
+        const idLinha = req.body.idLinha;
+        const sentido = req.body.sentido;
+
+        try {
+                const [itinerarioLinha, pontosDesejados] = await Promise.all([
+                lbDAO.select_itinerariosPorLinha(idLinha, sentido),
+                lbDAO.getPontosPorLinhaSentido(idLinha, sentido)
+            ]);
+
+            console.log("Abrindo página de itinerários da Linha " + idLinha + " sentido " + sentido + "...");
+            console.log(pontosDesejados) // Renderize a página EJS com os dados
+
+
+            res.render('./HTML_CSS/itinerarioLinha', { idLinha: idLinha, itinerarioLinha: itinerarioLinha, pontos: pontosDesejados });
+        } catch (error) {
+            console.error('Erro na obtenção de dados do servidor:', error);
+            res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
+        }
+    };
+}
+
 }
 module.exports = CON_Usuario;
 

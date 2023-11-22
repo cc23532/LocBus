@@ -23,6 +23,11 @@ module.exports = (app) =>
     res.render('./HTML_CSS/support')
   })
 
+  app.get('/consultaItinerarios', (req, res) => {
+    console.log('Abrindo página de consulta de itinerários...');
+    res.render('./HTML_CSS/consultaItinerario')
+  })
+
   app.get('/sobre-nos', (req, res) => {
     console.log('Abrindo página sobre nós...');
     res.render('./HTML_CSS/about-us')
@@ -36,5 +41,7 @@ module.exports = (app) =>
   app.get('/horariosPonto', lbController.exibeView())
 
   app.get('/horariosLinha/:idLinha', lbController.exibeHorarios());
+
+  app.post("/exibeItinerario", lbController.exibeItinerarioMapa())
 
 } 

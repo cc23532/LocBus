@@ -61,7 +61,21 @@ class DAO_Usuario{
   
   selectHorarios(idLinha) {
     return new Promise((resolve, reject) => {
-      const sql = `SELECT sentido, dia, horario FROM lb_Horarios_Partida WHERE idLinha=?`;
+      const sql= `SELECT
+                      h.dia,
+                      h.horario,
+                      h.idLinha,
+                      CASE
+                          WHEN h.sentido = 'ida' THEN l.nomeIda
+                          WHEN h.sentido = 'volta' THEN l.nomeVolta
+                      END AS sentido_nome
+                  FROM
+                      lb_Horarios_Partida h
+                  JOIN
+                      lb_Linhas l ON h.idLinha = l.idLinha
+                  WHERE
+                      h.idLinha = ?;`
+     // const sql = `SELECT sentido, dia, horario FROM lb_Horarios_Partida WHERE idLinha=?`;
       this._bd.query(sql, [idLinha], (erro, recordset) => {
         if (erro) {
           console.log(erro);
@@ -71,6 +85,52 @@ class DAO_Usuario{
       });
     });
   }
+
+  select_itinerariosPorLinha(idLinha, sentido){
+    return new Promise((resolve, reject) =>{
+      const sql= `SELECT
+                      i.idLinha,
+                      i.idPonto,
+                      i.logradouro,
+                      CASE
+                          WHEN i.sentido = 'ida' THEN l.nomeIda
+                          WHEN i.sentido = 'volta' THEN l.nomeVolta
+                      END AS sentido_nome
+                  FROM
+                      lb_Itinerario i
+                  JOIN lb_Linhas l ON i.idLinha = l.idLinha
+                  WHERE
+                      i.idLinha = ? AND i.sentido = ?
+                  ORDER BY
+                      i.sequencia;`
+      this._bd.query(sql, [idLinha, sentido], (erro, recordset) =>{
+        if(erro) {
+          console.log(erro);
+          return reject("Select falhou");
+        }
+        resolve(recordset);
+      })
+    })
+  }
+
+  getPontosPorLinhaSentido(idLinha, sentido) {
+    return new Promise((resolve, reject) => {
+        const sql = ` SELECT p.idPonto, p.logradouro, p.lat, p.lon
+                      FROM lb_Pontos p
+                      JOIN lb_Itinerario i ON p.idPonto = i.idPonto
+                      WHERE i.idLinha = ? AND i.sentido = ?
+                      ORDER BY i.sequencia`;
+
+        this._bd.query(sql, [idLinha, sentido], (erro, recordset) => {
+            if (erro) {
+                console.log(erro);
+                return reject("Get Pontos por Linha e Sentido falhou");
+            }
+            resolve(recordset);
+        });
+    });
+  }
+
   
   
 };

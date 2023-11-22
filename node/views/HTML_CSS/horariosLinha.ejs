@@ -1,25 +1,26 @@
-<!-- views/horarios.ejs -->
-
 <%
   function agruparPorSentidoDia(horariosLinha) {
     const agrupado = {};
 
     // Agrupa os horários por sentido e dia
     horariosLinha.forEach((horario) => {
-      if (!agrupado[horario.sentido]) {
-        agrupado[horario.sentido] = {};
+      const chaveAgrupamento = `${horario.idLinha}_${horario.sentido_nome}`;
+
+      if (!agrupado[chaveAgrupamento]) {
+        agrupado[chaveAgrupamento] = {};
       }
 
-      if (!agrupado[horario.sentido][horario.dia]) {
-        agrupado[horario.sentido][horario.dia] = [];
+      if (!agrupado[chaveAgrupamento][horario.dia]) {
+        agrupado[chaveAgrupamento][horario.dia] = [];
       }
 
-      agrupado[horario.sentido][horario.dia].push(horario.horario);
+      agrupado[chaveAgrupamento][horario.dia].push(horario.horario);
     });
 
     return agrupado;
   }
 %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,13 +33,14 @@
 
   <% const horariosAgrupados = agruparPorSentidoDia(horariosLinha); %>
 
-  <% for (const sentido in horariosAgrupados) { %>
-    <h2><%= sentido %></h2>
+  <% for (const chaveAgrupamento in horariosAgrupados) { %>
+    <% const [idLinha, sentidoNome] = chaveAgrupamento.split('_'); %>
+    <h2><%= `${idLinha} - ${sentidoNome}` %></h2>
 
-    <% for (const dia in horariosAgrupados[sentido]) { %>
+    <% for (const dia in horariosAgrupados[chaveAgrupamento]) { %>
       <h3><%= dia %></h3>
       <ul>
-        <% for (const horario of horariosAgrupados[sentido][dia]) { %>
+        <% for (const horario of horariosAgrupados[chaveAgrupamento][dia]) { %>
           <li><%= horario %></li>
         <% } %>
       </ul>

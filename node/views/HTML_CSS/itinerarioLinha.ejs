@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itinerário da Linha <%= idLinha %> - <%= itinerarioLinha[0].sentido_nome %></title>
+</head>
+<body>
+
+<h2>Itinerário da Linha <%= idLinha %> - <%= itinerarioLinha[0].sentido_nome %></h2>
+
+<ul>
+    <% for (let i = 0; i < itinerarioLinha.length; i++) { %>
+        <li>
+            <%= itinerarioLinha[i].logradouro %>
+        </li>
+    <% } %>
+</ul>
+
+<a href="/horariosLinha/<%= idLinha %>">Ir para horários</a>
+
+<div id="map" style="height: 400px; width: 40%;"></div>
+
+<!-- Adicione a chamada à função mapaItinerario() após a definição da função -->
+
+<script>
+    function mapaItinerario() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -22.96793034203473, lng: -46.995350186264304 },
+            zoom: 15
+        });
+
+        <% for (let i = 0; i < pontos.length; i++) { %>
+            createMarker(map, <%= pontos[i].lat %>, <%= pontos[i].lon %>, '<%= pontos[i].logradouro %>', '<%= i+1 %>');
+        <% } %>
+
+        function createMarker(map, lat, lon, title, idPonto) {
+            var infowindow = new google.maps.InfoWindow();
+
+            var marker = new google.maps.Marker({
+                position: { lat: lat, lng: lon },
+                map: map,
+                title: title,
+                icon: {
+                    url: '../assets/imgs/icon-bus-stop.png',
+                    scaledSize: new google.maps.Size(18, 18)
+                }
+            });
+
+            marker.addListener('click', function () {
+                var content = '<h3>' + title + '</h3>';
+                content += '<p><a href="/horariosPonto?idPonto=' + idPonto + '">Ver horários</a></p>';
+
+                infowindow.setContent(content);
+                infowindow.open(map, marker);
+            });
+        }
+    }
+
+    window.onload = function () {
+        mapaItinerario();
+    };
+</script>
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPqVesYps_1tILaZbeYap2oWw-u4WV7JE&callback=mapaItinerario"
+    async
+    defer
+></script>
+
+
+</body>
+</html>
