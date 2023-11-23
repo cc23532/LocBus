@@ -30,8 +30,8 @@
           <a href="#"><i class="fas fa-circle-user"></i></a>
         </div>
         <div class="login-text">
-          <a><p>Ainda não fez login?</p> </a>
-          <a href="/login"><p>Fazer Login</p></a>
+          <a><p>Seja bem-vindo,</p></a>
+          <a><p><%= user.nome %></p></a> <!-- Correção aqui -->
         </div>
       </div>
     </header>
@@ -40,30 +40,26 @@
         <div class="menu">
           <div class="menu-header">
             <img src="./assets/imgs/mapa-header.png" id="img-header" alt="">
-            <h2>Para onde <br> deseja ir?</h2>
+            <h2>Linha<br>Preferida</h2>
           </div>
           <div class="menu-main">
             <div class="menu-container">
               <div class="distance-img">
-                <img src="./assets/imgs/rota.png" alt="">
+                <img src="./assets/imgs/icone-de-bus-orange.png" alt="">
               </div>
-              <div class="inputs">
-                <div class="input-container">
-                  <input type="text" placeholder="Escolha seu local de partida" />
+              <div class="p">
+                <div class="p-container">
+                  <p><%= user.linhaPreferidaInfo.idLinha %></p>
                 </div>
-                <div class="input-container">
-                  <input type="text" placeholder="Escolha o destino" />
+                <div class="p-container">
+                  <p><%= user.linhaPreferidaInfo.nomeIda %> / <%= user.linhaPreferidaInfo.nomeVolta %></p>
                 </div>
               </div>
             </div>
             <div class="gray-box">
-              <i class="fas fa-clock"></i>
-              <select>
-                <option value="sairAgora">Sair Agora</option>
-                <option value="10min">10 min</option>
-                <option value="20min">20 min</option>
-              </select>
-              <button type="submit">Buscar asd</button>
+              <button type="submit" href="">Horários</button>
+              <br>
+              <button type="submit" href="">Itinerário</button>
             </div>
           </div>
         </div>
@@ -91,7 +87,7 @@
                   title: title,
                   icon: {
                       url: '../assets/imgs/icon-bus-stop.png',
-                      scaledSize: new google.maps.Size(18, 18)
+                      scaledSize: new google.maps.Size(22, 22)
                   }
               });
 

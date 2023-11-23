@@ -3,34 +3,42 @@ const locbusDAO = require("../bd/DAO_Usuario");
 
 class CON_Usuario 
 {
-  verificaLogin(){
-    return function (req, res){
+  getPontosEJS() {
+    return async function(req, res) {
       const lbDAO = new locbusDAO(bd);
-      const { email, senha } = req.body;
-      lbDAO.login(email, senha)
-      .then((recordset) =>{
+      const pontoIDs = Array.from({ length: 199 }, (_, index) => index + 1);
+  
+      try {
+        const { email, senha } = req.body;
+        const recordset = await lbDAO.login(email, senha);
+  
         if (recordset.length === 1) {
-          lbDAO.selectUsuario(email, senha)
-          .then((userData) =>{
-            req.session.user= {  nome: userData.nome, sobrenome: userData.sobrenome, cpf: userData.cpf, email: userData.email, linhaPreferida: userData.linhaPreferida }
-            console.log(req.session.user)
-            res.send(req.session.user)
-          })
-          .catch((erro) => {
-            console.log(erro);
-            res.send("Falha ao buscar os dados do Medico");
-          });
+          const userData = await lbDAO.selectUsuario(email, senha);
+          req.session.user = {
+            nome: userData.nome,
+            sobrenome: userData.sobrenome,
+            cpf: userData.cpf,
+            email: userData.email,
+            linhaPreferida: userData.linhaPreferida,
+            linhaPreferidaInfo: userData.linhaPreferidaInfo
+
+          };
+  
+          const pontosDesejados = await lbDAO.getPontosPeloID(pontoIDs);
+  
+          res.render('mapa', { user: req.session.user, pontos: pontosDesejados });
+          console.log(req.session.user);
         } else {
           console.log("Nenhum registro encontrado ou mais de um registro encontrado.");
           throw new Error("Falha ao efetuar login");
         }
-    })
-      .catch((erro) => {
-        console.log(erro);
-        res.send("Falha ao efetuar login");
-      });
-    }
+      } catch (error) {
+        console.error('Erro na obtenção de dados do servidor:', error);
+        res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
+      }
+    };
   }
+  
 
   cadastroUsuario(){
     return function(req, res){
@@ -46,22 +54,6 @@ class CON_Usuario
         console.log(erro);
         res.send("Falha ao cadastrar usuario");
       });
-    }
-  }
-
-  getPontosEJS() {
-    return async function(req, res){
-      const lbDAO = new locbusDAO(bd);
-      const pontoIDs = Array.from({ length: 199 }, (_, index) => index + 1);
-
-      try {
-          const pontosDesejados = await lbDAO.getPontosPeloID(pontoIDs);
-          res.render('mapa', { pontos: pontosDesejados });
-          console.log(pontosDesejados) // Renderize a página EJS com os dados
-      } catch (error) {
-          console.error('Erro na obtenção de dados do servidor:', error);
-          res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
-      }
     }
   }
 

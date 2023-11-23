@@ -147,6 +147,11 @@ header .logo img {
 
 .menu {
     width: 100%;
+    margin-bottom: 20px;
+}
+
+.container-mapa.sem-form {
+    grid-template-columns: 100%;
 }
 
 .menu-header {
@@ -249,4 +254,8 @@ header .logo img {
     height: 80%;
     align-items: center;
     justify-content: center;
+}
+
+.mapa-full-width {
+    grid-column: span 2;
 }

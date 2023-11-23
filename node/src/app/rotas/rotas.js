@@ -33,9 +33,9 @@ module.exports = (app) =>
     res.render('./HTML_CSS/about-us')
   })
   
-  app.get('/mapa', lbController.getPontosEJS());
+  app.post('/mapa', lbController.getPontosEJS());
 
-  app.post("/verificaLogin", lbController.verificaLogin())
+  app.post("/verificaLogin", lbController.getPontosEJS())
   app.post("/cadastrarUsuario", lbController.cadastroUsuario())
 
   app.get('/horariosPonto', lbController.exibeView())

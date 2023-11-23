@@ -218,6 +218,12 @@ select {
     align-items: center;
 }
 
+.field {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+}
+
 .input-field i {
     margin-left: 15px;
     color: #999;
