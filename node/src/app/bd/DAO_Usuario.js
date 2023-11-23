@@ -15,6 +15,24 @@ class DAO_Usuario{
         })
       })
     }
+
+    selectUsuario(email, senha){
+      return new Promise((resolve, reject) => {
+        const sql = 'select nome, sobrenome, cpf, email, linhaPreferida from lb_usuario where email=? and senha=?';
+        this._bd.query(sql, [email, senha], (erro, recordset) => {
+          if (erro) {
+            console.log(erro);
+            return reject("Dados não correspondem com os do BD");
+          }
+          console.log('Resultado da consulta:', recordset);
+          if (recordset.length >= 1) {
+            resolve({  nome: recordset[0].nome, sobrenome: recordset[0].sobrenome, cpf: recordset[0].cpf, email: recordset[0].email, linhaPreferida: recordset[0].linhaPreferida })
+          } else {
+            reject("Médico não encontrado");
+          }
+        });
+      });
+    }
     
     incluirDadosEJS(nome, sobrenome, cpf, email, senha, linhaPreferida) {
         return new Promise((resolve, reject) => {

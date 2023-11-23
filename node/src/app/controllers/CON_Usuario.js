@@ -8,10 +8,23 @@ class CON_Usuario
       const lbDAO = new locbusDAO(bd);
       const { email, senha } = req.body;
       lbDAO.login(email, senha)
-      .then(() =>{
-        console.log("login efetuado com sucesso!")
-        res.send("login efetuado com sucesso!")
-      })
+      .then((recordset) =>{
+        if (recordset.length === 1) {
+          lbDAO.selectUsuario(email, senha)
+          .then((userData) =>{
+            req.session.user= {  nome: userData.nome, sobrenome: userData.sobrenome, cpf: userData.cpf, email: userData.email, linhaPreferida: userData.linhaPreferida }
+            console.log(req.session.user)
+            res.send(req.session.user)
+          })
+          .catch((erro) => {
+            console.log(erro);
+            res.send("Falha ao buscar os dados do Medico");
+          });
+        } else {
+          console.log("Nenhum registro encontrado ou mais de um registro encontrado.");
+          throw new Error("Falha ao efetuar login");
+        }
+    })
       .catch((erro) => {
         console.log(erro);
         res.send("Falha ao efetuar login");
@@ -23,7 +36,8 @@ class CON_Usuario
     return function(req, res){
       const lbDAO= new locbusDAO(bd)
       const { nome, sobrenome, cpf, email, senha, linhaPreferida }= req.body
-      lbDAO.incluirDadosEJS(nome, sobrenome, cpf, email, senha, linhaPreferida)
+      const linhaPreferidaValue = (linhaPreferida === "") ? null : parseInt(linhaPreferida);
+      lbDAO.incluirDadosEJS(nome, sobrenome, cpf, email, senha, linhaPreferidaValue)
       .then(() =>{
         console.log("Usuario cadastrado com sucesso!")
         res.send("Usuario cadastrado com sucesso!")
