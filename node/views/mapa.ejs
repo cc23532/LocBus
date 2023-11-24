@@ -45,14 +45,17 @@
           <div class="menu-main">
             <div class="menu-container">
               <div class="distance-img">
-                <img src="./assets/imgs/icone-de-bus-orange.png" alt="">
+                <img src="./assets/imgs/icone-de-bus-orange.png" alt="Icone Onibus" id="iconBus">
+                <img src="./assets/imgs/rota.png" alt="" id="iconRota">
+
               </div>
               <div class="p">
                 <div class="p-container">
                   <p><%= user.linhaPreferidaInfo.idLinha %></p>
                 </div>
-                <div class="p-container">
-                  <p><%= user.linhaPreferidaInfo.nomeIda %> / <%= user.linhaPreferidaInfo.nomeVolta %></p>
+                <div class="p-container2">
+                  <p><%= user.linhaPreferidaInfo.nomeIda %> </p>
+                  <p><%= user.linhaPreferidaInfo.nomeVolta %></p>
                 </div>
               </div>
             </div>

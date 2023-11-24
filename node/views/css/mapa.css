@@ -169,6 +169,18 @@ header .logo img {
     margin-right: 20px;
 }
 
+form{
+    border: 2px solid transparent;
+    transition: all .3s ease;
+    border-radius: 0 2rem 2rem 0;
+}
+
+form:hover{
+    border-radius: 0 2rem 2rem 0;
+    border-color: var(--laranja);
+    background-color: #fff8;
+}
+
 .menu-main {
     padding: 20px;
 }
@@ -220,6 +232,9 @@ header .logo img {
     border-radius: 10px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    gap: .2rem;
 }
 
 .gray-box i {
@@ -241,7 +256,7 @@ header .logo img {
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    width: 100%;
+    width: 50%;
 }
 
 .menu-container {
@@ -249,13 +264,55 @@ header .logo img {
     grid-template-columns: 30px 1fr;
 }
 
+.distance-img{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+}
+
 .menu-container img{
     width: 20px;
-    height: 80%;
+    height: 100%;
     align-items: center;
     justify-content: center;
 }
 
+.menu-container img#iconBus{
+    padding-bottom: .5rem;
+    height: 25%;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.menu-container img#iconRota{
+    height: 60%;
+    margin-top: 10px;
+}
+
 .mapa-full-width {
     grid-column: span 2;
+}
+
+.p-container{
+    position: absolute;
+    font-size: 2rem;
+    font-weight: 800;
+    top: -10px;
+}
+
+.p-container2{
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: 600;
+    bottom: 2px;
+}
+
+.p-container2 p:last-child{
+    padding-top: 1.9rem;
+}
+
+.p{
+    position: relative;
 }

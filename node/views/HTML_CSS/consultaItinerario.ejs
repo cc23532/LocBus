@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Consulta de Itinerário</title>
-</head>
-<body>
+    <link rel="stylesheet" href="../css/consultarItinerario.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <div class="heading">Consulta de Itinerário</div>
+      <form action="/exibeItinerario" class="form" method="post">
+        <label for="idLinha">Selecione a Linha:</label>
+        <select name="idLinha" id="idLinha">
+          <!-- Opções para idLinha, substitua pelos valores reais -->
+          <option value="675">675</option>
+          <option value="676">676</option>
+          <option value="677">677</option>
+          <!-- Adicione mais opções conforme necessário -->
+        </select>
 
-<h2>Consulta de Itinerário</h2>
+        <label for="sentido" id="sentido__label">Selecione o Sentido:</label>
+        <select name="sentido" id="sentido">
+          <option value="ida" class="input">675 - Campinas via Swift</option>
+          <option value="volta" class="input">
+            675 - Valinhos (Rodoviária)
+          </option>
+          <option value="ida" class="input">
+            676 - Campinas via Jd. do Lago
+          </option>
+          <option value="volta" class="input">
+            676 - Valinhos (Jd. do Lago)
+          </option>
+          <option value="ida" class="input">677 - Campinas (Rodoviária)</option>
+          <option value="volta" class="input">
+            677 - Valinhos (Pq. das Colinas)
+          </option>
+        </select>
 
-<form action="/exibeItinerario" method="post">
-    <label for="idLinha">Selecione a Linha:</label>
-    <select name="idLinha" id="idLinha">
-        <!-- Opções para idLinha, substitua pelos valores reais -->
-        <option value="675">675</option>
-        <option value="676">676</option>
-        <option value="677">677</option>
-        <!-- Adicione mais opções conforme necessário -->
-    </select>
-
-    <br>
-
-    <label for="sentido">Selecione o Sentido:</label>
-    <select name="sentido" id="sentido">
-        <option value="ida">675 - Campinas via Swift</option>
-        <option value="volta">675 - Valinhos (Rodoviária)</option>
-        <option value="ida">676 - Campinas via Jd. do Lago</option>
-        <option value="volta">676 - Valinhos (Jd. do Lago)</option>
-        <option value="ida">677 - Campinas (Rodoviária)</option>
-        <option value="volta">677 - Valinhos (Pq. das Colinas)</option>
-    </select>
-
-    <br>
-
-    <input type="submit" value="Consultar">
-</form>
-
-</body>
+        <input class="login-button" type="submit" value="Consultar" />
+      </form>
+    </div>
+  </body>
 </html>
