@@ -35,24 +35,39 @@
         </div>
       </div>
     </header>
-    <div id="map"></div>
-    <section class="section__busca">
-    <div>
-        <i class="fas fa-bus"></i>
-        <h4>Linha:</h4>
-        <p><%= user.linhaPreferidaInfo.idLinha %></p>
-    </div>
-    <div>
-        <i class="fas fa-map-marker-alt"></i>
-        <h4>Nome Ida:</h4>
-        <p><%= user.linhaPreferidaInfo.nomeIda %></p>
-    </div>
-    <div>
-        <i class="fas fa-map-marker-alt"></i>
-        <h4>Nome Volta:</h4>
-        <p><%= user.linhaPreferidaInfo.nomeVolta %></p>
-    </div>
-</section>
+    <section class="container-mapa">
+      <form action="#">
+        <div class="menu">
+          <div class="menu-header">
+            <img src="./assets/imgs/mapa-header.png" id="img-header" alt="">
+            <h2>Linha<br>Preferida</h2>
+          </div>
+          <div class="menu-main">
+            <div class="menu-container">
+              <div class="distance-img">
+                <img src="./assets/imgs/icone-de-bus-orange.png" alt="Icone Onibus" id="iconBus">
+                <img src="./assets/imgs/rota.png" alt="" id="iconRota">
+              </div>
+              <div class="p">
+                <div class="p-container">
+                  <p><%= user.linhaPreferidaInfo.idLinha %></p>
+                </div>
+                <div class="p-container2">
+                  <p><%= user.linhaPreferidaInfo.nomeIda %> </p>
+                  <p><%= user.linhaPreferidaInfo.nomeVolta %></p>
+                </div>
+              </div>
+            </div>
+            <div class="gray-box">
+              <a type="submit" href="/horarios">Horários</a>
+              <br>
+              <a type="submit" href="/consultaItinerarios">Itinerário</a>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div id="map"></div>
+    </section>
 
 
     <script>
