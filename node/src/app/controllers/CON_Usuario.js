@@ -64,7 +64,9 @@ class CON_Usuario
       lbDAO.selectView(idPonto)
       .then((horariosPonto) =>{
         console.log("Abrindo página de horários do ponto " + idPonto+ "...")
-        res.render('./HTML_CSS/horariosPonto', {idPonto: idPonto, horariosPonto: horariosPonto})
+        res.render('./HTML_CSS/horariosPonto', {idPonto: idPonto, horariosPonto: horariosPonto, user: req.session.user})
+        console.log(req.session.user);
+
       })
       .catch((error) => {
         console.error('Erro na obtenção de dados do servidor:', error);
@@ -80,7 +82,23 @@ class CON_Usuario
       lbDAO.selectHorarios(idLinha)
       .then((horariosLinha) =>{
         console.log("Abrindo página de horários da Linha " + idLinha+ "...")
-        res.render('./HTML_CSS/horariosLinha', {idLinha: idLinha, horariosLinha: horariosLinha})
+        res.render('./HTML_CSS/horariosLinha', {idLinha: idLinha, horariosLinha: horariosLinha, user: req.session.user})
+      })
+      .catch((error) => {
+        console.error('Erro na obtenção de dados do servidor:', error);
+        res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
+      })
+    }
+  }
+
+  exibeHorarios_ReqBody(){
+    return function (req, res){
+      const lbDAO= new locbusDAO(bd)
+      const idLinha= req.body.idLinha
+      lbDAO.selectHorarios(idLinha)
+      .then((horariosLinha) =>{
+        console.log("Abrindo página de horários da Linha " + idLinha+ "...")
+        res.render('./HTML_CSS/horariosLinha', {idLinha: idLinha, horariosLinha: horariosLinha, user: req.session.user})
       })
       .catch((error) => {
         console.error('Erro na obtenção de dados do servidor:', error);
@@ -105,7 +123,7 @@ class CON_Usuario
             console.log(pontosDesejados) // Renderize a página EJS com os dados
 
 
-            res.render('./HTML_CSS/itinerarioLinha', { idLinha: idLinha, itinerarioLinha: itinerarioLinha, pontos: pontosDesejados });
+            res.render('./HTML_CSS/itinerarioLinha', { idLinha: idLinha, itinerarioLinha: itinerarioLinha, pontos: pontosDesejados, user: req.session.user });
         } catch (error) {
             console.error('Erro na obtenção de dados do servidor:', error);
             res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });

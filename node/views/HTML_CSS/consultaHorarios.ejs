@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consulta de Horários</title>
+    <link rel="stylesheet" href="../css/consultasItinerarioHorario.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <div class="heading">Consulta de Horários</div>
+      <form action="/exibeHorario" class="form" method="post">
+        <label for="idLinha">Selecione a Linha:</label>
+        <select name="idLinha" id="idLinha">
+          <!-- Opções para idLinha, substitua pelos valores reais -->
+          <option value="675">675 - Campinas via Swift / Valinhos (Rodoviária)</option>
+          <option value="676">676 - Campinas via Jd. do Lago / Valinhos (Jd. do Lago)</option>
+          <option value="677">677 - Campinas (Rodoviária) / Valinhos (Pq. das Colinas)</option>
+          <!-- Adicione mais opções conforme necessário -->
+        </select>
+
+        <input class="login-button" type="submit" value="Consultar" />
+      </form>
+    </div>
+  </body>
+</html>

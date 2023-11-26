@@ -20,7 +20,7 @@ module.exports = (app) =>
 
   app.get('/suporte', (req, res) => {
     console.log('Abrindo página de suporte...');
-    res.render('./HTML_CSS/support')
+    res.render('./HTML_CSS/support', {user: req.session.user})
   })
 
   app.get('/consultaItinerarios', (req, res) => {
@@ -30,15 +30,21 @@ module.exports = (app) =>
 
   app.get('/sobre-nos', (req, res) => {
     console.log('Abrindo página sobre nós...');
-    res.render('./HTML_CSS/about-us')
+    res.render('./HTML_CSS/about-us', {user: req.session.user})
   })
   
-  app.post('/mapa', lbController.getPontosEJS());
-
-  app.post("/verificaLogin", lbController.getPontosEJS())
+  app.get('/horarios', (req, res) => {
+    console.log('Abrindo página de seleção de horários...');
+    res.render('./HTML_CSS/consultaHorarios')
+  })
+  
+  app.get("/home", lbController.getPontosEJS())
+  app.post("/home", lbController.getPontosEJS())
   app.post("/cadastrarUsuario", lbController.cadastroUsuario())
 
   app.get('/horariosPonto', lbController.exibeView())
+
+  app.post('/exibeHorario', lbController.exibeHorarios_ReqBody());
 
   app.get('/horariosLinha/:idLinha', lbController.exibeHorarios());
 
