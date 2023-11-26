@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --azul: #004aad;
+    --laranja: #ff914d;
+    --branco: #fff;
+    --preto: #000;
+    --cinza: #737B97;
+    --cinza-claro: #d5d1defe;
+    --branco-cinza: #F5F5F5;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Poppins', sans-serif;
+    transition: .2 linear;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+
+/* ------- TABLE ------- */
+.main-container {
+    display: flex;
+    gap: 1rem;
+    padding: 50px;
+    background: #d3d3d3;
+}
+main.table{
+    width: 50%;
+}
+.table-header {
+    display: flex;
+    background: var(--azul);
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    margin-left: -20px;
+}
+.table-header h1{
+    color: var(--branco);
+}
+.pontos {
+    list-style: none;
+    padding: 0;
+}
+
+.pontos li {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+li.bolinha{
+    padding-left: 50px;
+    margin-top: 30px;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+.bolinha::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border: 2px solid #737B97;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+}
+
+.pontos li::after {
+    content: "";
+    width: 3px;
+    height: 300%;
+    background-color: #737B97;
+    position: absolute;
+    top: 80%;
+    left: 27px;
+    transform: translateX(-50%);
+}
+
+.table-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--branco);
+    margin-left: -20px;
+}
+.pontos li:last-child::after {
+    display: none;
+}
+/* Mapa */
+
+.section__mapa{
+    height: 550px;
+    width: 55%;
+}
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+/* Adicione as seguintes regras de estilo para personalizar o botão */
+a#horarios__link {
+    display: block;
+    background-color: #f6660d;
+    color: var(--branco);
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: all .4s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+a#horarios__link:hover {
+    opacity: .8;
+}
