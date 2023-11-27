@@ -40,33 +40,31 @@
     <% const [idLinha, sentidoNome] = chaveAgrupamento.split('_'); %>
 
   <section class="main-container">
-      <main class="table">
-        <section class="table-header">
-          <h1><%= `${idLinha} - ${sentidoNome}` %></h1>
-        </section>
-        <% for (const dia in horariosAgrupados[chaveAgrupamento]) { %>
-          <h1 class="table-header"><%= dia %></h1>
-          <section class="table-body">
-            <table>
-              <thead>
-                <tr>
-                  <th>Horário</th>
-                </tr>
-              </thead>
+    <main class="table">
+      <section class="table-header">
+        <h2>Partida de: </h2>
+        <h2><%= `${idLinha} - ${sentidoNome}` %></h2>
+        
+      </section>
 
-              <tbody>
-                 <% for (const horario of horariosAgrupados[chaveAgrupamento][dia]) { %>
-                <tr>
-                  <td><%= horario %></td>
-                </tr>
-                <% } %>
-              </tbody>
-            </table>
+      <% for (const dia in horariosAgrupados[chaveAgrupamento]) { %>
+        
+        <section class="table-body">
+          <h1><%= dia %></h1>
+          <ul>
+            <% for (const horario of horariosAgrupados[chaveAgrupamento][dia]) { %>
+              <li><%= horario %></li>
             <% } %>
-          </section>
-        </main>
-    </section>
+          </ul>
+        </section>
+      <% } %>
+    </main>
+  </section>
     <% } %>
+
+    <section class="section__voltar-mapa">
+      <a href="/home">Voltar para o mapa</a>
+    </section>
 
 </body>
 

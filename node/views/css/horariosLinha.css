@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
 * {
     padding: 0;
     margin: 0;
@@ -17,107 +15,85 @@
     --preto: #000;
 }
 
-body {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    height: 100vh;
-    /* Ocupa 100% da altura da viewport */
-    margin: 0;
-}
+
+/* ... (o resto do seu CSS) */
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    /* Centraliza no eixo X */
-    align-items: center;
-    /* Centraliza no eixo Y */
-    position: absolute;
-    top: 30px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-
-
-main.table {
-    margin-top: 40px;
-    margin: 20px;
-    text-align: center;
-    width: 30vw;
-    box-shadow: 0 .4rem .8rem #0005;
-    border-radius: .8rem;
-    overflow: hidden;
-
-}
-
-table {
-    width: 100%;
-}
-
-table,
-th,
-td {
-    border-collapse: collapse;
-    padding: 1em;
-    text-align: center;
+    padding: 1rem 2rem;
 }
 
 .table-header {
-    width: 100%;
-    height: 10%;
-    padding: .8rem 1rem;
-    background-color: var(--laranja);
+    display: flex;
+    background-color: var(--azul);
+    color: var(--branco);
+    padding: 20px;
+    position: relative;
+    align-items: center;
 }
 
-.table-header h1 {
-    font-size: 1.5rem;
-    color: #fff;
+.table-header h2 {
+    margin-right: 1rem;
+    font-size: 1rem;
 }
 
-.table-body {
-    width: 95%;
-    background-color: var(--branco-cinza);
-    margin: 1rem auto;
-    border-radius: .6rem;
-    box-shadow: 0 .4rem .10rem #0001;
+.table-header h2:first-child {
+    margin-right: 3.5rem;
 }
 
-thead th {
-    background-color: #0000000b;
-}
-
-thead th:first-child {
-    border-radius: .6rem 0 0 0;
-}
-
-thead th:last-child {
-    border-radius: 0 .6rem 0 0;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #0000000b;
-}
-
-tbody tr:hover {
-    background: #fff9;
-}
-
-tbody tr td {
-    font-weight: 600;
+.table-header h2:last-child {
     font-size: 1.2rem;
 }
 
-i.fa-regular.fa-clock {
-    color: var(--branco);
-    background-color: var(--azul);
-    padding: .3rem;
-    border-radius: 5px;
-    font-size: 1.1rem;
+.table-header h2:first-child::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: var(--branco);
+    left: 8.7rem;
+    top: 0;
 }
 
-i.fa-regular.fa-clock:hover {
-    background-color: rgba(0, 74, 173, .8);
+.table-body {
+    padding: 1rem 0;
+}
+
+.table-body ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.table-body ul li {
+    max-width: 300px;
+    /* serve para jogar a palavra para baixo se for maior que o container em que está :3 */
+    overflow-wrap: break-word;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.table-body h1 {
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    margin-bottom: .8rem;
+}
+
+.section__voltar-mapa {
+    margin-top: 1rem;
+}
+
+.section__voltar-mapa a {
+    background-color: var(--laranja);
+    color: var(--branco);
+    padding: 15px;
+    border-radius: 50px;
+    margin-top: 12rem;
+    font-weight: 600;
+    border: solid 2px transparent;
+    transition: all .2s ease-in-out;
+}
+
+.section__voltar-mapa a:hover {
+    border-color: var(--azul);
 }
