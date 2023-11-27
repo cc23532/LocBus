@@ -39,7 +39,9 @@ module.exports = (app) =>
   })
   
   app.get("/home", lbController.getPontosEJS())
-  app.post("/home", lbController.getPontosEJS())
+
+  app.post("/home", lbController.getPontosEJS_viaLogin())
+  
   app.post("/cadastrarUsuario", lbController.cadastroUsuario())
 
   app.get('/horariosPonto', lbController.exibeView())

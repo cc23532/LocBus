@@ -3,15 +3,14 @@ const locbusDAO = require("../bd/DAO_Usuario");
 
 class CON_Usuario 
 {
-  getPontosEJS() {
+  getPontosEJS_viaLogin() {
     return async function(req, res) {
       const lbDAO = new locbusDAO(bd);
       const pontoIDs = Array.from({ length: 199 }, (_, index) => index + 1);
-  
       try {
         const { email, senha } = req.body;
         const recordset = await lbDAO.login(email, senha);
-  
+        
         if (recordset.length === 1) {
           const userData = await lbDAO.selectUsuario(email, senha);
           req.session.user = {
@@ -39,6 +38,20 @@ class CON_Usuario
     };
   }
   
+  getPontosEJS(){
+    return async function(req, res){
+      const lbDAO = new locbusDAO(bd);
+      const pontoIDs = Array.from({ length: 199 }, (_, index) => index + 1);
+      try {
+          const pontosDesejados = await lbDAO.getPontosPeloID(pontoIDs);
+          res.render('mapa', { pontos: pontosDesejados, user: req.session.user});
+          console.log(pontosDesejados) // Renderize a página EJS com os dados
+      } catch (error) {
+          console.error('Erro na obtenção de dados do servidor:', error);
+          res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
+      }
+    }
+  }
 
   cadastroUsuario(){
     return function(req, res){
