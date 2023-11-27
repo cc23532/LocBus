@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    list-style: none;
+    text-decoration: none;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --azul: #004aad;
+    --laranja: #ff914d;
+    --branco: #fff;
+    --preto: #000;
+}
+
+body {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    height: 100vh;
+    /* Ocupa 100% da altura da viewport */
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* Centraliza no eixo X */
+    align-items: center;
+    /* Centraliza no eixo Y */
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+
+main.table {
+    margin-top: 40px;
+    margin: 20px;
+    text-align: center;
+    width: 30vw;
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
+    overflow: hidden;
+
+}
+
+table {
+    width: 100%;
+}
+
+table,
+th,
+td {
+    border-collapse: collapse;
+    padding: 1em;
+    text-align: center;
+}
+
+.table-header {
+    width: 100%;
+    height: 10%;
+    padding: .8rem 1rem;
+    background-color: var(--laranja);
+}
+
+.table-header h1 {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.table-body {
+    width: 95%;
+    background-color: var(--branco-cinza);
+    margin: 1rem auto;
+    border-radius: .6rem;
+    box-shadow: 0 .4rem .10rem #0001;
+}
+
+thead th {
+    background-color: #0000000b;
+}
+
+thead th:first-child {
+    border-radius: .6rem 0 0 0;
+}
+
+thead th:last-child {
+    border-radius: 0 .6rem 0 0;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #0000000b;
+}
+
+tbody tr:hover {
+    background: #fff9;
+}
+
+tbody tr td {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+i.fa-regular.fa-clock {
+    color: var(--branco);
+    background-color: var(--azul);
+    padding: .3rem;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+i.fa-regular.fa-clock:hover {
+    background-color: rgba(0, 74, 173, .8);
+}

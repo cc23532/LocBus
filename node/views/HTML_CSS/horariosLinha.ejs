@@ -21,31 +21,53 @@
   }
 %>
 
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Horários</title>
+  <link rel="stylesheet" href="../css/horariosLinha.css">
 </head>
+
 <body>
 
+  
   <% const horariosAgrupados = agruparPorSentidoDia(horariosLinha); %>
 
   <% for (const chaveAgrupamento in horariosAgrupados) { %>
     <% const [idLinha, sentidoNome] = chaveAgrupamento.split('_'); %>
-    <h2><%= `${idLinha} - ${sentidoNome}` %></h2>
 
-    <% for (const dia in horariosAgrupados[chaveAgrupamento]) { %>
-      <h3><%= dia %></h3>
-      <ul>
-        <% for (const horario of horariosAgrupados[chaveAgrupamento][dia]) { %>
-          <li><%= horario %></li>
-        <% } %>
-      </ul>
+  <section class="main-container">
+      <main class="table">
+        <section class="table-header">
+          <h1><%= `${idLinha} - ${sentidoNome}` %></h1>
+        </section>
+        <% for (const dia in horariosAgrupados[chaveAgrupamento]) { %>
+          <h1 class="table-header"><%= dia %></h1>
+          <section class="table-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Horário</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                 <% for (const horario of horariosAgrupados[chaveAgrupamento][dia]) { %>
+                <tr>
+                  <td><%= horario %></td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+            <% } %>
+          </section>
+        </main>
+    </section>
     <% } %>
-  <% } %>
 
 </body>
+
 </html>
