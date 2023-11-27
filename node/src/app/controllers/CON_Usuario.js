@@ -14,6 +14,7 @@ class CON_Usuario
         if (recordset.length === 1) {
           const userData = await lbDAO.selectUsuario(email, senha);
           req.session.user = {
+            idUser: userData.idUser,
             nome: userData.nome,
             sobrenome: userData.sobrenome,
             cpf: userData.cpf,
@@ -69,6 +70,65 @@ class CON_Usuario
       });
     }
   }
+
+  selecionaAlterarDados(){
+    return function (req, res){
+      const lbDAO= new locbusDAO(bd)
+      const idUser= req.params.idUser
+      const { nome, sobrenome, cpf, email, senha, linhaPreferida }= req.body
+      lbDAO.catchDadosParaUpdate(nome, sobrenome, cpf, email, senha, linhaPreferida,idUser)
+      .then(() =>{
+        console.log("Abrindo página de dados do Usuário " + idUser+ "...")
+        res.render('./HTML_CSS/alterarDadosUsuario', {user: req.session.user})
+      })
+      .catch((error) => {
+        console.error('Erro na obtenção de dados do servidor:', error);
+        res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
+      })
+    }
+  }
+
+  AlterarDados() {
+    const self = this;
+  
+    return function (req, res) {
+      const lbDAO = new locbusDAO(bd);
+      const idUser = req.body.idUser;
+      const nome = req.body.nome;
+      const sobrenome = req.body.sobrenome;
+      const cpf = req.body.cpf;
+      const email = req.body.email;
+      const linhaPreferida = req.body.linhaPreferida;
+  
+      lbDAO.updateUsuario(nome, sobrenome, cpf, email, linhaPreferida, idUser)
+        .then((resultado) => {
+          console.log("Alterando dados do Usuário " + idUser + "...");
+          
+          // Verificar se a linha preferida foi atualizada com sucesso
+          const linhaPreferidaInfo = resultado.linhaPreferidaInfo;
+  
+          // Atualizar req.session.user com os dados atualizados
+          req.session.user = {
+            ...req.session.user,
+            nome: resultado.nome,
+            sobrenome: resultado.sobrenome,
+            cpf: resultado.cpf,
+            email: resultado.email,
+            linhaPreferida: resultado.linhaPreferida,
+            linhaPreferidaInfo: linhaPreferidaInfo  // Adicione as informações da linha preferida
+            // Adicione outras propriedades conforme necessário
+          };
+  
+          // Chamar getPontosEJS no contexto da instância atual
+          self.getPontosEJS()(req, res);
+        })
+        .catch((error) => {
+          console.error('Erro ao alterar dados do servidor:', error);
+          res.status(500).json({ error: 'Erro ao alterar dados do servidor' });
+        });
+    };
+  }
+  
 
   exibeView(){
     return function (req, res){

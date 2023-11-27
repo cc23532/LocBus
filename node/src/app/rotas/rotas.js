@@ -52,4 +52,8 @@ module.exports = (app) =>
 
   app.post("/exibeItinerario", lbController.exibeItinerarioMapa())
 
+  app.get('/consultaDados/:idUser', lbController.selecionaAlterarDados())
+
+  app.post("/alterarDados", lbController.AlterarDados())
+
 } 

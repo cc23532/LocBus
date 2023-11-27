@@ -18,7 +18,7 @@ class DAO_Usuario{
 
     selectUsuario(email, senha) {
       return new Promise((resolve, reject) => {
-        const sql = 'SELECT nome, sobrenome, cpf, email, linhaPreferida FROM lb_usuario WHERE email=? AND senha=?';
+        const sql = 'SELECT idUser, nome, sobrenome, cpf, email, linhaPreferida FROM lb_usuario WHERE email=? AND senha=?';
         this._bd.query(sql, [email, senha], (erro, recordset) => {
           if (erro) {
             console.log(erro);
@@ -28,6 +28,7 @@ class DAO_Usuario{
     
           if (recordset.length >= 1) {
             const usuario = {
+              idUser: recordset[0].idUser,
               nome: recordset[0].nome,
               sobrenome: recordset[0].sobrenome,
               cpf: recordset[0].cpf,
@@ -67,6 +68,78 @@ class DAO_Usuario{
           });
     };
 
+    catchDadosParaUpdate(idUser){
+      return new Promise((resolve, reject) =>{
+        const sql= 'SELECT idUser, nome, sobrenome, cpf, email, linhaPreferida FROM lb_usuario where idUser=?'
+        this._bd.query(sql, [idUser], (erro, recordset) =>{
+          if (erro) {
+            console.log(erro);
+            return reject("Falha ao selecionar dados...");
+          }
+          resolve(recordset);
+        })
+      })
+    }
+    updateUsuario(nome, sobrenome, cpf, email, linhaPreferida, idUser) {
+      return new Promise((resolve, reject) => {
+        const updateSql = `
+          UPDATE lb_Usuario
+          SET nome=?, sobrenome=?, cpf=?, email=?, linhaPreferida=?
+          WHERE idUser=?
+        `;
+    
+        // Atualizar os dados do usuário
+        this._bd.query(updateSql, [nome, sobrenome, cpf, email, linhaPreferida, idUser], (erroUpdate, resultUpdate) => {
+          if (erroUpdate) {
+            console.log(erroUpdate);
+            return reject("Falha na atualização do cliente");
+          }
+    
+          const selectSql = `
+            SELECT idUser, nome, sobrenome, cpf, email, linhaPreferida
+            FROM lb_usuario WHERE idUser=?
+          `;
+    
+          // Consultar novamente os dados do usuário após a atualização
+          this._bd.query(selectSql, [idUser], (erroSelect, resultSelect) => {
+            if (erroSelect) {
+              console.log(erroSelect);
+              return reject("Erro ao recuperar dados atualizados do usuário");
+            }
+    
+            console.log('Resultado da consulta:', resultSelect);
+    
+            if (resultSelect.length >= 1) {
+              const usuario = {
+                idUser: resultSelect[0].idUser,
+                nome: resultSelect[0].nome,
+                sobrenome: resultSelect[0].sobrenome,
+                cpf: resultSelect[0].cpf,
+                email: resultSelect[0].email,
+                linhaPreferida: resultSelect[0].linhaPreferida
+              };
+    
+              // Obter informações sobre a linha preferida após a atualização
+              const sqlLinhaPreferida = 'SELECT idLinha, nomeIda, nomeVolta FROM lb_Linhas WHERE idLinha=?';
+              this._bd.query(sqlLinhaPreferida, [linhaPreferida], (erroLinhaPreferida, resultLinhaPreferida) => {
+                if (erroLinhaPreferida) {
+                  console.log(erroLinhaPreferida);
+                  reject("Erro ao obter informações da linha preferida");
+                } else {
+                  // Adicionar informações sobre a linha preferida ao resultado
+                  const linhaPreferidaInfo = resultLinhaPreferida[0];
+                  resolve({ ...usuario, linhaPreferidaInfo });
+                  console.log(usuario, linhaPreferidaInfo);
+                }
+              });
+            } else {
+              reject("Nenhum usuário encontrado após a atualização");
+            }
+          });
+        });
+      });
+    }
+      
 
     getPontosPeloID(ids) {
           return new Promise((resolve, reject) => {
