@@ -33,9 +33,11 @@ html {
     padding: 50px;
     background: #d3d3d3;
 }
-main.table{
+
+main.table {
     width: 50%;
 }
+
 .table-header {
     display: flex;
     background: var(--azul);
@@ -44,9 +46,11 @@ main.table{
     position: relative;
     margin-left: -20px;
 }
-.table-header h1{
+
+.table-header h1 {
     color: var(--branco);
 }
+
 .pontos {
     list-style: none;
     padding: 0;
@@ -57,7 +61,7 @@ main.table{
     margin-bottom: 20px;
 }
 
-li.bolinha{
+li.bolinha {
     padding-left: 50px;
     margin-top: 30px;
     font-size: 1.2rem;
@@ -97,23 +101,29 @@ li.bolinha{
     background: var(--branco);
     margin-left: -20px;
 }
+
 .pontos li:last-child::after {
     display: none;
 }
+
 /* Mapa */
 
-.section__mapa{
+.section__mapa {
     height: 550px;
     width: 55%;
 }
+
 #map {
     height: 100%;
     width: 100%;
 }
 
 /* Adicione as seguintes regras de estilo para personalizar o botão */
-a#horarios__link {
-    display: block;
+a.horarios__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
     background-color: #f6660d;
     color: var(--branco);
     padding: 15px;
@@ -124,8 +134,15 @@ a#horarios__link {
     transition: all .4s ease;
     font-weight: 600;
     text-transform: uppercase;
+    border: solid 2px transparent;
 }
 
-a#horarios__link:hover {
-    opacity: .8;
+.btns {
+    display: flex;
+    gap: 1rem;
+}
+
+a.horarios__link:hover {
+    border-color: var(--azul);
+    background-color: rgb(210, 94, 22)
 }
