@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Loc bus</title>
-    <link rel="stylesheet" href="./css/support.css" />
+    <link rel="stylesheet" href="../css/support.css" />
     <!-- link FONT AWSONE CDN -->
     <script
       src="https://kit.fontawesome.com/eeb24722a1.js"
@@ -14,7 +14,7 @@
   <body>
     <header>
       <a href="" class="logo"
-        ><img src="./assets/imgs/lockbus-logo.png" alt="Logo LocBus"
+        ><img src="../assets/imgs/lockbus-logo.png" alt="Logo LocBus"
       /></a>
 
       <nav>
@@ -70,11 +70,12 @@
           <nav>
             <h4>Menu Rodapé</h4>
             <ul class="footer-nav-links">
-              <li><a href="#" id="active">Início</a></li>
-              <li><a href="#">Horários</a></li>
-              <li><a href="#">Linhas</a></li>
-              <li><a href="#">Quem Somos</a></li>
-              <li><a href="#">Fale Conosco</a></li>
+              <li><a href="/home">Início</a></li>
+              <li><a href="/horarios">Horários</a></li>
+              <li><a href="/consultaItinerarios">Itinerários</a></li>
+              <li><a href="/consultaDados/<%= user.idUser %>">Dados do Usuário</a></li>
+              <li><a href="/sobre-nos">Quem Somos</a></li>
+              <li><a href="/suporte" id="active">Fale Conosco</a></li>
             </ul>
           </nav>
         </div>
@@ -91,7 +92,7 @@
         </div>
 
         <div class="footer-block">
-          <img src="./assets/imgs/lockbus-logo.png" alt="Imagem do Footer" />
+          <img src="../assets/imgs/lockbus-logo.png" alt="Imagem do Footer" />
         </div>
       </section>
     </footer>
