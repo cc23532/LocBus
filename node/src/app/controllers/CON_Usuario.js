@@ -1,5 +1,8 @@
 const bd = require("../../config/database");
 const locbusDAO = require("../bd/DAO_Usuario");
+const funcoesArduino= require('../arduino/arduino');
+const { enviarComandoParaArduino, mapearIdLinhaParaLetra } = funcoesArduino;
+
 
 class CON_Usuario 
 {
@@ -130,22 +133,56 @@ class CON_Usuario
   }
   
 
-  exibeView(){
-    return function (req, res){
-      const lbDAO= new locbusDAO(bd)
-      const idPonto= req.query.idPonto
-      lbDAO.selectView(idPonto)
-      .then((horariosPonto) =>{
-        console.log("Abrindo página de horários do ponto " + idPonto+ "...")
-        res.render('./HTML_CSS/horariosPonto', {idPonto: idPonto, horariosPonto: horariosPonto, user: req.session.user})
-        console.log(req.session.user);
 
-      })
-      .catch((error) => {
-        console.error('Erro na obtenção de dados do servidor:', error);
-        res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
-    });
-    }
+  exibeView() {
+    return (req, res) => {
+      const lbDAO = new locbusDAO(bd);
+      const idPonto = req.query.idPonto;
+  
+      lbDAO.selectView(idPonto)
+        .then((horariosPonto) => {
+          console.log("Abrindo página de horários do ponto " + idPonto + "...");
+  
+          // Adicione a lógica de comparação de horários aqui
+          const horariosComDiferenca = horariosPonto.map(horarioPonto => {
+            const horarioAtual = new Date(); // Horário atual completo
+            const horarioTabelaParts = horarioPonto.horarioTabela.split(':'); // Divide a string do horário em partes
+  
+            // Verifica se as partes do horário são válidas
+            if (horarioTabelaParts.length !== 3 || isNaN(horarioTabelaParts[0]) || isNaN(horarioTabelaParts[1]) || isNaN(horarioTabelaParts[2])) {
+              return { ...horarioPonto, diferencaEmMinutos: 'Invalid Time' };
+            }
+  
+            // Cria um novo objeto de Data apenas com as partes de tempo
+            const horarioTabela = new Date();
+            horarioTabela.setHours(horarioTabelaParts[0], horarioTabelaParts[1], horarioTabelaParts[2]);
+  
+            // Calcule a diferença em minutos
+            const diferencaEmMinutos = Math.floor((horarioTabela - horarioAtual) / (60 * 1000));
+  
+            // Adicione a diferença ao objeto horarioPonto
+            const letraOnibus = mapearIdLinhaParaLetra(horarioPonto.idLinha);
+  
+            // Adicione este console log para verificar a associação entre linhas e letras
+            console.log(`Linha ${horarioPonto.idLinha} associada à letra ${letraOnibus}, faltam ${diferencaEmMinutos} minutos para ele passar`);
+  
+            // Enviar comandos para o Arduino com base nas diferenças em minutos
+            enviarComandoParaArduino(letraOnibus, diferencaEmMinutos);
+  
+            return { ...horarioPonto, diferencaEmMinutos, letraOnibus };
+          });
+  
+          res.render('./HTML_CSS/horariosPonto', {
+            idPonto: idPonto,
+            horariosPonto: horariosComDiferenca,
+            user: req.session.user
+          });
+        })
+        .catch((error) => {
+          console.error('Erro na obtenção de dados do servidor:', error);
+          res.status(500).json({ error: 'Erro na obtenção de dados do servidor' });
+        });
+    };
   }
 
   exibeHorarios(){
