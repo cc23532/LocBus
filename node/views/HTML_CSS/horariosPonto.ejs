@@ -17,7 +17,7 @@
     <!-- header -->
     <header>
       <a href="" class="logo"
-        ><img src="./assets/imgs/lockbus-logo.png" alt="Logo LocBus"
+        ><img src="../assets/imgs/lockbus-logo.png" alt="Logo LocBus"
       /></a>
 
       <nav>
@@ -55,6 +55,7 @@
                 <th>Linhas</th>
                 <th>Destino</th>
                 <th>Horário</th>
+                <th>Faltam</th>
                 <th>Todos Horários</th>
               </tr>
             </thead>
@@ -66,6 +67,8 @@
                 <td><%= horarioPonto.idLinha %></td>
                 <td><%= horarioPonto.sentidoLinha %></td>
                 <td><%= horarioPonto.horarioTabela %></td>
+                <td><%= horarioPonto.diferencaEmMinutos %> minutos</td>
+
                 <td>
                   <a href="/horariosLinha/<%= horarioPonto.idLinha %>">
                     <i class="fa-regular fa-clock"></i>
@@ -93,11 +96,12 @@
           <nav>
             <h4>Menu Rodapé</h4>
             <ul class="footer-nav-links">
-              <li><a href="#" id="active">Início</a></li>
-              <li><a href="#">Horários</a></li>
-              <li><a href="#">Linhas</a></li>
-              <li><a href="#">Quem Somos</a></li>
-              <li><a href="#">Fale Conosco</a></li>
+              <li><a href="/home">Início</a></li>
+              <li><a href="/horarios" id="active">Horários</a></li>
+              <li><a href="/consultaItinerarios">Itinerários</a></li>
+              <li><a href="/consultaDados/<%= user.idUser %>">Dados do Usuário</a></li>
+              <li><a href="/sobre-nos">Quem Somos</a></li>
+              <li><a href="/suporte">Fale Conosco</a></li>
             </ul>
           </nav>
         </div>
@@ -114,7 +118,7 @@
         </div>
 
         <div class="footer-block">
-          <img src="./assets/imgs/lockbus-logo.png" alt="Imagem do Footer" />
+          <img src="../assets/imgs/lockbus-logo.png" alt="Imagem do Footer" />
         </div>
       </section>
     </footer>
