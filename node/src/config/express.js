@@ -15,6 +15,8 @@ app.use(
     })
 )
 
+app.use(bodyParser.json())
+
 app.use(
     session({
       secret: 'BD23532',
