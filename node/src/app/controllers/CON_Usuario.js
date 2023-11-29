@@ -138,7 +138,6 @@ class CON_Usuario
     return (req, res) => {
       const lbDAO = new locbusDAO(bd);
       const idPonto = req.query.idPonto;
-  
       lbDAO.selectView(idPonto)
         .then((horariosPonto) => {
           console.log("Abrindo página de horários do ponto " + idPonto + "...");
