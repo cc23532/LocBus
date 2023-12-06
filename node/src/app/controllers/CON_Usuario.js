@@ -12,6 +12,7 @@ class CON_Usuario
       const pontoIDs = Array.from({ length: 199 }, (_, index) => index + 1);
       try {
         const { email, senha } = req.body;
+        console.log(req.body)
         const recordset = await lbDAO.login(email, senha);
         
         if (recordset.length === 1) {
@@ -155,26 +156,7 @@ class CON_Usuario
   
             const diferencaEmMinutos = Math.floor((horarioTabela - horarioAtual) / (60 * 1000));
   
-            const letraOnibus = mapearIdLinhaParaLetra(horarioPonto.idLinha);
-  
-            console.log(`Linha ${horarioPonto.idLinha} associada à letra ${letraOnibus}, faltam ${diferencaEmMinutos} minutos para ele passar`);
-  
-            const enviarComandoParaArduino = (letraOnibus, diferencaEmMinutos) => {
-              const comando = `${letraOnibus}${diferencaEmMinutos}`;
-            
-              arduino.write(comando, (err) => {
-                if (err) {
-                  console.error('Erro ao enviar comando para o Arduino:', err);
-                } else {
-                  console.log(`Comando enviado para o Arduino: ${comando}`);
-                }
-              });
-            };
-
-            enviarComandoParaArduino(letraOnibus, diferencaEmMinutos);
-            console.log(enviarComandoParaArduino(letraOnibus, diferencaEmMinutos))
-  
-            return { ...horarioPonto, diferencaEmMinutos, letraOnibus };
+            return { ...horarioPonto, diferencaEmMinutos };
           });
   
           res.render('./HTML_CSS/horariosPonto', {
